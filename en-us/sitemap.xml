@@ -14,19 +14,6 @@
     <loc>https://rug4lo.github.io/hmv/</loc>
     <lastmod>2023-11-13T07:28:17+08:00</lastmod>
   </url><url>
-    <loc>https://rug4lo.github.io/tags/</loc>
-    <lastmod>2023-11-13T07:28:17+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://rug4lo.github.io/zh-cn/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://rug4lo.github.io/tags/"
-                />
-  </url><url>
     <loc>https://rug4lo.github.io/</loc>
     <lastmod>2023-11-13T07:28:17+08:00</lastmod>
     <xhtml:link
@@ -38,6 +25,19 @@
                 rel="alternate"
                 hreflang="en-us"
                 href="https://rug4lo.github.io/"
+                />
+  </url><url>
+    <loc>https://rug4lo.github.io/tags/</loc>
+    <lastmod>2023-11-13T07:28:17+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://rug4lo.github.io/zh-cn/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://rug4lo.github.io/tags/"
                 />
   </url><url>
     <loc>https://rug4lo.github.io/tags/android-hacking/</loc>
@@ -184,6 +184,12 @@
     <loc>https://rug4lo.github.io/tags/spring-cloud-exploitation/</loc>
     <lastmod>2022-08-23T07:28:17+08:00</lastmod>
   </url><url>
+    <loc>https://rug4lo.github.io/tags/blog/</loc>
+    <lastmod>2022-07-19T07:28:17+08:00</lastmod>
+  </url><url>
+    <loc>https://rug4lo.github.io/blog/</loc>
+    <lastmod>2022-07-19T07:28:17+08:00</lastmod>
+  </url><url>
     <loc>https://rug4lo.github.io/tags/deserializacion/</loc>
     <lastmod>2022-07-19T07:28:17+08:00</lastmod>
   </url><url>
@@ -197,6 +203,9 @@
     <lastmod>2022-07-19T07:28:17+08:00</lastmod>
   </url><url>
     <loc>https://rug4lo.github.io/thm/2022/07/jajaajano/</loc>
+    <lastmod>2022-07-19T07:28:17+08:00</lastmod>
+  </url><url>
+    <loc>https://rug4lo.github.io/blog/2022/07/mi-experiencia-con-la-ejptv2/</loc>
     <lastmod>2022-07-19T07:28:17+08:00</lastmod>
   </url><url>
     <loc>https://rug4lo.github.io/tags/php/</loc>

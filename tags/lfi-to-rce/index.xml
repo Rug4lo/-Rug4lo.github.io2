@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>LFI to RCE on Vno Hugo</title>
+    <title>LFI to RCE on Rug4lo</title>
     <link>https://rug4lo.github.io/tags/lfi-to-rce/</link>
-    <description>Recent content in LFI to RCE on Vno Hugo</description>
+    <description>Recent content in LFI to RCE on Rug4lo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 13 Sep 2023 07:28:17 +0800</lastBuildDate>

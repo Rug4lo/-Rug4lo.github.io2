@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Vno Hugo</title>
+    <title>Rug4lo</title>
     <link>https://rug4lo.github.io/</link>
-    <description>Recent content on Vno Hugo</description>
+    <description>Recent content on Rug4lo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 13 Nov 2023 07:28:17 +0800</lastBuildDate>
@@ -100,6 +100,13 @@ Vamos a escanear los puertos de esta con Nmap:
       <description>You’ll find this post in your posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run hugo serve, which launches a web server and auto-regenerates your site when a file is updated.
 To add new posts, simply run:
 $ hugo new posts/my-sample-post.md And you shall see the my-sample-post.md file in posts directory, just edit the front matter and content as you like.</description>
+    </item>
+    <item>
+      <title>Mi Experiencia con la EJPTv2</title>
+      <link>https://rug4lo.github.io/blog/2022/07/mi-experiencia-con-la-ejptv2/</link>
+      <pubDate>Tue, 19 Jul 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/blog/2022/07/mi-experiencia-con-la-ejptv2/</guid>
+      <description>Introduccion Hace unos meses me certifique con extito del EJPTv2 de Elearn Security, en este post os voy a explicar un poco sobre mi experiencia, los conocimientos que tenia antes de empezar al preparacion, la dificultad que yo creo que tiene el examen, y las maneras que considero que son las mejores para prepararse al completo para esta</description>
     </item>
     <item>
       <title>Pika Twoo</title>

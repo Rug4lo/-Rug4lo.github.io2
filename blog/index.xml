@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Rug4lo</title>
+    <link>https://rug4lo.github.io/blog/</link>
+    <description>Recent content in Blogs on Rug4lo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Jul 2022 07:28:17 +0800</lastBuildDate>
+    <atom:link href="https://rug4lo.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mi Experiencia con la EJPTv2</title>
+      <link>https://rug4lo.github.io/blog/2022/07/mi-experiencia-con-la-ejptv2/</link>
+      <pubDate>Tue, 19 Jul 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/blog/2022/07/mi-experiencia-con-la-ejptv2/</guid>
+      <description>Introduccion Hace unos meses me certifique con extito del EJPTv2 de Elearn Security, en este post os voy a explicar un poco sobre mi experiencia, los conocimientos que tenia antes de empezar al preparacion, la dificultad que yo creo que tiene el examen, y las maneras que considero que son las mejores para prepararse al completo para esta</description>
+    </item>
+  </channel>
+</rss>

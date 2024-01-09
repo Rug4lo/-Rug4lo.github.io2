@@ -15,10 +15,10 @@
     <title>Rug4lo</title>
     
     
-    <meta name="author" content="onevcat" /> 
+    <meta name="author" content="Rug4lo" /> 
      
     
-    <meta name="description" content="Vno Hugo is a port of Vno Jekyll." /> 
+    <meta name="description" content="Rug4lo&#39;s Website" /> 
     
     
     <meta name="keywords" content="Bruteforce, Capabilitie exploitation" />
@@ -68,8 +68,8 @@
       <div class="panel-main__inner panel-inverted">
       <div class="panel-main__content">
   
-          <a href="/#blog" title="Homepage of Vno Hugo " class="blog-button"><img src="/images/avatar.jpg" width="80" alt="Vno Hugo logo" class="panel-cover__logo logo" /></a>
-          <h1 class="panel-cover__title panel-title"><a href="/#blog" title="Homepage of Vno Hugo" class="blog-button">Rug4lo</a></h1>
+          <a href="/#blog" title="Homepage of Rug4lo " class="blog-button"><img src="/images/avatar.jpg" width="80" alt="Rug4lo logo" class="panel-cover__logo logo" /></a>
+          <h1 class="panel-cover__title panel-title"><a href="/#blog" title="Homepage of Rug4lo" class="blog-button">Rug4lo</a></h1>
           <hr class="panel-cover__divider" />
         <p class="panel-cover__description">Hacker  •  Red teamer  •  Pentester</p>
           <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
@@ -77,8 +77,8 @@
             <div>
               <nav class="cover-navigatio cover-navigation--primary">
                 <ul class="navigation">
-                  <li class="navigation__item"><a href="https://app.hackthebox.com/users/1478590" title="Rug4lo" target="_blank" class="sblog-button">HTB</a></li>
                   <li class="navigation__item"><a href="/writeups" title='Writeups' class="sblog-button">Writeups</a></li>
+                  <li class="navigation__item"><a href="/blog" title='Blog' class="sblog-button">Blog</a></li>
                   <li class="navigation__item"><a href="/#whoami" title='Whoami' class="blog-button">About</a></li>
                 </ul>
               </nav>
@@ -87,6 +87,7 @@
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
+                    <li class="navigation__item"><a href="https://app.hackthebox.com/users/1478590" title="Rug4lo" target="_blank" class="sblog-button">HTB</a></li>
                     <li class="navigation__item"><a href="/" title='Home' class="sblog-button">Home</a></li>
                   </ul>
                 </nav>
@@ -154,11 +155,11 @@
     <section class="post">
         <p><img src="/hmv/Slowman/images/logo.png" alt="slowman"></p>
 <h2 id="contenido">Contenido</h2>
-<ol>
+<ul>
 <li><a href="#Reconocimiento">Reconocimiento</a></li>
 <li><a href="#bruteforce">Fuerza bruta</a></li>
 <li><a href="#privesc">Escalada de privilegios</a></li>
-</ol>
+</ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
 <p>Podemos empezar con el típico escaneo con nmap</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn 192.168.56.102
@@ -241,7 +242,7 @@
     <div class="read-more-item">
         <span class="read-more-item-dim">Recent</span>
         <h2 class="post-list__post-title post-title"><a href="/htb/2023/09/htb-pikatwoo/" title="link to HTB - PikaTwoo">HTB - PikaTwoo</a></h2>
-        <p class="excerpt">Resolución de la maquina Slowman - Easy</p>
+        <p class="excerpt">Resolucion de la maquina PikaTwoo - Insane</p>
         <div class="post-list__meta">
             <time datetime=" 2023-11-13 07:28:17 &#43;0800" class="post-list__meta--date date">2023-09-13</time>
              
@@ -254,33 +255,7 @@
     
  </section>
   
-<section class="post-comments">
-    
-      <div id="disqus_thread"></div>
-      <script>
-      
-      var disqus_config = function () {
-          this.page.url = "https:\/\/rug4lo.github.io\/hmv\/slowman\/slowman\/";
-          this.page.identifier = "https:\/\/rug4lo.github.io\/hmv\/slowman\/slowman\/";
-      };
-  
-      var disqus_shortname = 'vno-hugo';
-      
-      (function() { 
-          var d = document, s = d.createElement('script');
-          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-              (d.head || d.body).appendChild(s);
-          })();
-      </script>
-      <noscript>To view comments from<a href="http://disqus.com/?ref_noscript"> Disqus </a>, please enable JavaScript.</noscript>
-      
-    
-
-    
-    
-  </section>
-  
+<br>
 
         <section class="footer">
     <footer>
