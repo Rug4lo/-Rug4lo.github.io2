@@ -2,6 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://rug4lo.github.io/zh-cn/blogs/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://rug4lo.github.io/blogs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://rug4lo.github.io/zh-cn/blogs/"
+                />
+  </url><url>
     <loc>https://rug4lo.github.io/zh-cn/tags/</loc>
     <xhtml:link
                 rel="alternate"
