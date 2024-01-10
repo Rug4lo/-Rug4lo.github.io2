@@ -83,7 +83,6 @@
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -92,7 +91,6 @@
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -161,7 +159,7 @@
 <li><a href="#privesc">Escalada de privilegios</a></li>
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
-<p>Podemos empezar con el típico escaneo con nmap</p>
+<p>Podemos empezar con el típico escaneo con <code>nmap</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn 192.168.56.102
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -193,48 +191,58 @@
 </span></span><span style="display:flex;"><span>           Raw packets sent: <span style="color:#ae81ff">131086</span> <span style="color:#f92672">(</span>5.768MB<span style="color:#f92672">)</span> | Rcvd: <span style="color:#ae81ff">26</span> <span style="color:#f92672">(</span>1.124KB<span style="color:#f92672">)</span>
 </span></span></code></pre></div><p>Esta maquina tiene una pagina web, pero al hacer el reconocimiento no encontré nada interesante</p>
 <p><img src="/hmv/Slowman/images/1.png" alt="slowman"></p>
-<p>También podemos ver que tiene el puerto 21 abierto (en este caso no haremos un escaneo con los scripts básicos de nmap porque no nos reportara nada interesante),  por lo que podemos probar a conectarnos a ver si tiene algún recurso compartido</p>
+<p>También podemos ver que tiene el puerto <code>21</code> abierto (en este caso no haremos un escaneo con los scripts básicos de nmap porque no nos reportara nada interesante),  por lo que podemos probar a conectarnos a ver si tiene algún recurso compartido</p>
 <p><img src="/hmv/Slowman/images/2.png" alt="slowman"></p>
-<p>Si nos descargamos este archivo y lo abrimos veremos un usuario de la base de datos mySQL (la cual esta corriendo en el puerto 3306)</p>
+<p>Si nos descargamos este archivo y lo abrimos veremos un usuario de la base de datos <code>mySQL</code> (la cual esta corriendo en el puerto <code>3306</code>)</p>
 <p><img src="/hmv/Slowman/images/3.png" alt="slowman"></p>
 <h2 id="bruteforce">Fuerza bruta</h2>
-<p>Teniendo un usuario podemos intentar hacer fuerza bruta conhydra, en este caso usare el rockyou.txt</p>
+<p>Teniendo un usuario podemos intentar hacer fuerza bruta con <code>hydra</code>, en este caso usare el rockyou.txt</p>
 <p><img src="/hmv/Slowman/images/4.png" alt="slowman"></p>
 <p>Perfecto, tenemos la contraseña, ahora podemos conectarnos a la base de datos a ver si hay mas credenciales</p>
 <p><img src="/hmv/Slowman/images/5.png" alt="slowman"></p>
-<p>En la base de datos trainers_db podemos ver que hay una tabla llamada users, si vemos la información de esta veremos un usuario y una contraseña, junta a una ruta para iniciar sesión</p>
+<p>En la base de datos <code>trainers_db</code> podemos ver que hay una tabla llamada users, si vemos la información de esta veremos un usuario y una contraseña, junta a una ruta para iniciar sesión</p>
 <p><img src="/hmv/Slowman/images/6.png" alt="slowman"></p>
 <p>Si entramos en la ruta, e introducimos el usuario y contraseña que acabamos de conseguir veremos que nos deja acceder</p>
 <p><img src="/hmv/Slowman/images/7.png" alt="slowman"></p>
-<p>Ya dentro vemos una carpeta, en la cual hay un archivo llamado credentials.zip</p>
+<p>Ya dentro vemos una carpeta, en la cual hay un archivo llamado <code>credentials.zip</code></p>
 <p><img src="/hmv/Slowman/images/8.png" alt="slowman"></p>
 <p>Podemos descargarlo y descomprimirlo, pero veremos que tiene contraseña</p>
 <p><img src="/hmv/Slowman/images/9.png" alt="slowman"></p>
-<p>Podemos probar john para hacer fuerza bruta en este zip</p>
-<p>Para esto primero usamos zip2john</p>
+<p>Podemos probar <code>john</code> para hacer fuerza bruta en este zip</p>
+<p>Para esto primero usamos <code>zip2john</code></p>
 <p><img src="/hmv/Slowman/images/10.png" alt="slowman"></p>
-<p>Ahora con john vamos a empezar la fuerza bruta (en mi caso como ya lo tenia deshasheado me aparece en el &ndash;show)</p>
+<p>Ahora con <code>john</code> vamos a empezar la fuerza bruta (en mi caso como ya lo tenia deshasheado me aparece en el &ndash;show)</p>
 <p><img src="/hmv/Slowman/images/11.png" alt="slowman"></p>
-<p>Con la contraseña descomprimimos el zip, el cual tendra un archivo credentials.txt</p>
+<p>Con la contraseña descomprimimos el <code>zip</code>, el cual tendra un archivo credentials.txt</p>
 <p><img src="/hmv/Slowman/images/12.png" alt="slowman"></p>
-<p>Viendo que ca contraseña esta hasheada podemos deshashearla con john</p>
+<p>Viendo que ca contraseña esta hasheada podemos deshashearla con <code>john</code></p>
 <p><img src="/hmv/Slowman/images/13.png" alt="slowman"></p>
 <p>Con la contraseña y el usuario nos podemos conectar por ssh y conseguir la user flag</p>
 <p><img src="/hmv/Slowman/images/14.png" alt="slowman"></p>
 <h2 id="privesc">Escalada de privilegios</h2>
 <p>Ahora podemos empezar la escalada de privilegios, para eso miraremos lo típico (SUID, kernel, capabilities, sudo -l)</p>
-<p>Podemos ver que el python tiene la capabilitie cap_setuid=ep, esto nos dejara escalar privilegios</p>
+<p>Podemos ver que el python tiene la capabilitie <code>cap_setuid=ep</code>, esto nos dejara escalar privilegios</p>
 <p><img src="/hmv/Slowman/images/15.png" alt="slowman"></p>
 <p>Para conseguir una consola como root tendremos que hacer esto:</p>
 <p>GTFOBINS &ndash;&gt; <a href="https://gtfobins.github.io/gtfobins/python/">https://gtfobins.github.io/gtfobins/python/</a></p>
 <p><img src="/hmv/Slowman/images/16.png" alt="slowman"></p>
-<p>Con esto ya somos root, y tenemos la flag en el /root/root.txt</p>
+<p>Con esto ya somos root, y tenemos la flag en el<code> /root/root.txt</code></p>
 
     </section>
 </article>
 <br>
 <br>
 <section class="read-more">
+    
+    <div class="read-more-item">
+        <span class="read-more-item-dim">Recent</span>
+        <h2 class="post-list__post-title post-title"><a href="/blog/2023/11/mi-experiencia-con-la-ejptv2/" title="link to Mi Experiencia con la EJPTv2">Mi Experiencia con la EJPTv2</a></h2>
+        <p class="excerpt">Explicando mi experiencia con el EJPTv2</p>
+        <div class="post-list__meta">
+            <time datetime=" 2023-11-13 07:28:17 &#43;0800" class="post-list__meta--date date">2023-11-21</time>
+             <span class="post-list__meta--tags tags">   • <a href="https://rug4lo.github.io/tags/blog">Blog</a>  </span> 
+        </div>
+    </div>
     
 
 

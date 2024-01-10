@@ -83,7 +83,6 @@
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -92,7 +91,6 @@
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -163,7 +161,7 @@
 <li><a href="#root">De Jovian a root</a></li>
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
-<p>Primero empezamos con el típico escaneo con nmap</p>
+<p>Primero empezamos con el típico escaneo con <code>nmap</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -sS -min-rate <span style="color:#ae81ff">1000</span> -vvv -n -Pn -oG allPorts 10.10.11.216
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -210,7 +208,7 @@
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span></code></pre></div><p>Viendo que no hay nada interesante iremos a investigar un poco la pagina web</p>
 <p><img src="/htb/Jupiter/images/1.png" alt="Jupiter"></p>
-<p>Si buscamos por la pagina no seremos capaces de encontrar nada, pero si nos ponemos a enumerar subdominios, encontraremos uno muy interesante:</p>
+<p>Si buscamos por la pagina no seremos capaces de encontrar nada, pero si nos ponemos a enumerar <code>subdominios</code>, encontraremos uno muy interesante:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ wfuzz -c --hc<span style="color:#f92672">=</span><span style="color:#ae81ff">403</span> --hw <span style="color:#ae81ff">12</span> -t <span style="color:#ae81ff">20</span> -w /opt/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -H <span style="color:#e6db74">&#34;Host: FUZZ.jupiter.htb&#34;</span> http://jupiter.htb/
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>********************************************************
@@ -228,37 +226,37 @@
 </span></span><span style="display:flex;"><span>^C /usr/lib/python3/dist-packages/wfuzz/wfuzz.py:80: UserWarning:Finishing pending requests...
 </span></span></code></pre></div><p>Si buscamos por ese subdominio, (recordando que hay que ponerlo en el /etc/hosts), nos encontraremos una pagina bastante interesante</p>
 <p><img src="/htb/Jupiter/images/2.png" alt="Jupiter"></p>
-<p>La pagina en si no tiene gran cosa, pero si interceptamos con burpsuite las peticiones de la pagina (la principal) veremos algo interesante:</p>
+<p>La pagina en si no tiene gran cosa, pero si interceptamos con <code>burpsuite</code> las peticiones de la pagina (la principal) veremos algo interesante:</p>
 <p><img src="/htb/Jupiter/images/3.png" alt="Jupiter"></p>
 <h2 id="Explotación">Explotación de la query</h2>
-<p>En esta peticion podemos observar que manda una query por una base de datos <strong>PpostgresSQL</strong> por lo que buscando encontré una manera de ejecutar comandos en la query, por lo tanto me mande una reverse shell a mi maquina</p>
+<p>En esta peticion podemos observar que manda una query por una base de datos <code>PpostgresSQL</code> por lo que buscando encontré una manera de ejecutar comandos en la query, por lo tanto me mande una reverse shell a mi maquina</p>
 <p><img src="/htb/Jupiter/images/4.png" alt="Jupiter"></p>
 <p>En el otro terminal nos entrara la reverse shell y podremos continuar</p>
 <p><img src="/htb/Jupiter/images/5.png" alt="Jupiter"></p>
 <h2 id="Juno">De Postgres a Juno</h2>
-<p>Ahora hay que escalar a el usuario Juno, para esto, si utilizamos el pspy podremos ver que el usuario juno esta corriendo un .yml en el /dev/shm, podemos modificarlo para que nos cree una bash y le ponga permiso suid en el /temp</p>
+<p>Ahora hay que escalar a el usuario <code>Juno</code>, para esto, si utilizamos el pspy podremos ver que el usuario <code>juno</code> esta corriendo un .yml en el /dev/shm, podemos modificarlo para que nos cree una bash y le ponga permiso suid en el /temp</p>
 <p><img src="/htb/Jupiter/images/6.png" alt="Jupiter"></p>
-<p>Si esperamos un poco nos creara una bash en el tmp, con la que podemos convertirnos en el usuario Juno</p>
+<p>Si esperamos un poco nos creara una bash en el tmp, con la que podemos convertirnos en el usuario <code>Juno</code></p>
 <p><img src="/htb/Jupiter/images/7.png" alt="Jupiter"></p>
-<p>Para conectarnos pr ssh podemos irnos a la carpeta .ssh de Juno y pasarle nuestra id_rsa.pub y cambiarle el nombre a authorized_keys</p>
+<p>Para conectarnos pr ssh podemos irnos a la carpeta .ssh de <code>Juno</code> y pasarle nuestra id_rsa.pub y cambiarle el nombre a authorized_keys</p>
 <p><img src="/htb/Jupiter/images/8.png" alt="Jupiter"></p>
 <p>Ahora si entramos por ssh y ya tendremos la user.txt</p>
 <p><img src="/htb/Jupiter/images/9.png" alt="Jupiter"></p>
 <h2 id="Jovian">De Juno a Jovian</h2>
-<p>Ahora vamos a mirar los grupos en donde esta este usuario, y vemos el grupo &ldquo;science&rdquo;</p>
+<p>Ahora vamos a mirar los grupos en donde esta este usuario, y vemos el grupo <code>science</code></p>
 <p><img src="/htb/Jupiter/images/10.png" alt="Jupiter"></p>
-<p>Si buscamos por archivos que tengan este grupo veremos que en el opt hay varios logs que podemos leer</p>
+<p>Si buscamos por archivos que tengan este grupo veremos que en el opt hay varios <code>logs</code> que podemos leer</p>
 <p><img src="/htb/Jupiter/images/11.png" alt="Jupiter"></p>
-<p>Si listamos el mas reciente veremos un token para un servicio interno de la maquina, que se ejecuta en el puerto 8888</p>
+<p>Si listamos el mas reciente veremos un token para un servicio interno de la maquina, que se ejecuta en el puerto <code>8888</code></p>
 <p><img src="/htb/Jupiter/images/12.png" alt="Jupiter"></p>
 <p>Si hacermos un portforwarding con ssh podremos entrara a este servicio desde nuestra maquina</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -L 8888:127.0.0.1:8888 juno@10.10.11.216
 </span></span></code></pre></div><p>Si nos metemos en la pagina veremos lo siguiente</p>
 <p><img src="/htb/Jupiter/images/13.png" alt="Jupiter"></p>
 <p>Indagando un poco encontramos que tiene un apartado donde podemos ejecutar codigo python (creamos un nuevo documento .ipynb)</p>
-<p>Si introducimos una reverse shell ahí podemos ganar acceso como el usuario jovian</p>
+<p>Si introducimos una reverse shell ahí podemos ganar acceso como el usuario <code>jovian</code></p>
 <p><img src="/htb/Jupiter/images/14.png" alt="Jupiter"></p>
-<p>Con esto ya tendremos acceso como el usuario Jovian</p>
+<p>Con esto ya tendremos acceso como el usuario <code>Jovian</code></p>
 <p><img src="/htb/Jupiter/images/15.png" alt="Jupiter"></p>
 <h2 id="root">De Jovian a root</h2>
 <p>Ahora si vemos los permisos que tiene este usuario como root encontraremos esto:</p>
@@ -271,12 +269,12 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>User jovian may run the following commands on jupiter:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>ALL<span style="color:#f92672">)</span> NOPASSWD: /usr/local/bin/sattrack
-</span></span></code></pre></div><p>Este usuario puede ejecutar como administrado este binario, el cual si inspeccionamos con el comando strings, encontraremos que ejecuta un config.json</p>
+</span></span></code></pre></div><p>Este usuario puede ejecutar como administrado este binario, el cual si inspeccionamos con el comando strings, encontraremos que ejecuta un <code>config.json</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano /usr/local/share/sattrack/config.json
 </span></span></code></pre></div><p>Podemos copiarnos este archivo al /tmp</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp config.json /tmp/config.json
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x config.json 
-</span></span></code></pre></div><p>Y ahora modificarlo para que nos copie la root flag</p>
+</span></span></code></pre></div><p>Y ahora <code>modificarlo</code> para que nos copie la root flag</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;tleroot&#34;</span>: <span style="color:#e6db74">&#34;/tmp/tle/&#34;</span>,
 </span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;tlefile&#34;</span>: <span style="color:#e6db74">&#34;weather.txt&#34;</span>,
@@ -309,7 +307,7 @@
 </span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;vel&#34;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Con esto hecho ejecutamos el binario, y esto nos creara una carpeta tle en la cual dentro estará la root.txt</p>
+</span></span></code></pre></div><p>Con esto hecho ejecutamos el binario, y esto nos creara una carpeta <code>tle</code> en la cual dentro estará la root.txt</p>
 <p><img src="/htb/Jupiter/images/16.png" alt="Jupiter"></p>
 
     </section>
@@ -320,11 +318,11 @@
     
     <div class="read-more-item">
         <span class="read-more-item-dim">Recent</span>
-        <h2 class="post-list__post-title post-title"><a href="/htb/2023/09/htb-pikatwoo/" title="link to HTB - PikaTwoo">HTB - PikaTwoo</a></h2>
-        <p class="excerpt">Resolucion de la maquina PikaTwoo - Insane</p>
+        <h2 class="post-list__post-title post-title"><a href="/htb/2023/07/htb-bankrobber/" title="link to HTB - Bankrobber">HTB - Bankrobber</a></h2>
+        <p class="excerpt">Resolucion de la maquina Bankrobber - Insane</p>
         <div class="post-list__meta">
-            <time datetime=" 2023-03-03 07:28:17 &#43;0800" class="post-list__meta--date date">2023-09-13</time>
-             <span class="post-list__meta--tags tags">   • <a href="https://rug4lo.github.io/tags/information-leakage">Information Leakage</a>   • <a href="https://rug4lo.github.io/tags/keystone-exploitation">Keystone Exploitation</a>   • <a href="https://rug4lo.github.io/tags/android-hacking">Android Hacking</a>   • <a href="https://rug4lo.github.io/tags/apk-vulneration">APK Vulneration</a>   • <a href="https://rug4lo.github.io/tags/ssl-bypass">SSL Bypass</a>   • <a href="https://rug4lo.github.io/tags/signature-bypass">Signature Bypass</a>   • <a href="https://rug4lo.github.io/tags/sqli">SQLI</a>   • <a href="https://rug4lo.github.io/tags/apisix-exploitation">APISIX Exploitation</a>   • <a href="https://rug4lo.github.io/tags/lfi-to-rce">LFI to RCE</a>   • <a href="https://rug4lo.github.io/tags/nginx-exploitation">Nginx Exploitation</a>   • <a href="https://rug4lo.github.io/tags/kubernetes-exploitation">Kubernetes Exploitation</a>  </span> 
+            <time datetime=" 2023-03-03 07:28:17 &#43;0800" class="post-list__meta--date date">2023-07-04</time>
+             <span class="post-list__meta--tags tags">   • <a href="https://rug4lo.github.io/tags/blind-xss-injection">Blind XSS Injection</a>   • <a href="https://rug4lo.github.io/tags/cookie-hijacking">Cookie hijacking</a>   • <a href="https://rug4lo.github.io/tags/sqli">SQLI</a>   • <a href="https://rug4lo.github.io/tags/stealing-net-ntlmv2-hash">Stealing Net-NTLMv2 Hash</a>   • <a href="https://rug4lo.github.io/tags/rce">RCE</a>   • <a href="https://rug4lo.github.io/tags/abusing-a-custom-binary">Abusing a custom binary</a>  </span> 
         </div>
     </div>
     

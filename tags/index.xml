@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Rug4lo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Nov 2023 07:28:17 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 21 Nov 2023 07:28:17 +0800</lastBuildDate>
     <atom:link href="https://rug4lo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog</title>
+      <link>https://rug4lo.github.io/tags/blog/</link>
+      <pubDate>Tue, 21 Nov 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/blog/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Bruteforce</title>
       <link>https://rug4lo.github.io/tags/bruteforce/</link>
@@ -100,10 +107,38 @@
       <description></description>
     </item>
     <item>
-      <title>Cookie Hijacking</title>
+      <title>Abusing a custom binary</title>
+      <link>https://rug4lo.github.io/tags/abusing-a-custom-binary/</link>
+      <pubDate>Tue, 04 Jul 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/abusing-a-custom-binary/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Blind XSS Injection</title>
+      <link>https://rug4lo.github.io/tags/blind-xss-injection/</link>
+      <pubDate>Tue, 04 Jul 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/blind-xss-injection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cookie hijacking</title>
       <link>https://rug4lo.github.io/tags/cookie-hijacking/</link>
-      <pubDate>Fri, 03 Mar 2023 07:28:17 +0800</pubDate>
+      <pubDate>Tue, 04 Jul 2023 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/tags/cookie-hijacking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RCE</title>
+      <link>https://rug4lo.github.io/tags/rce/</link>
+      <pubDate>Tue, 04 Jul 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/rce/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Stealing Net-NTLMv2 Hash</title>
+      <link>https://rug4lo.github.io/tags/stealing-net-ntlmv2-hash/</link>
+      <pubDate>Tue, 04 Jul 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/stealing-net-ntlmv2-hash/</guid>
       <description></description>
     </item>
     <item>
@@ -261,6 +296,27 @@
       <description></description>
     </item>
     <item>
+      <title>Docker Breakout</title>
+      <link>https://rug4lo.github.io/tags/docker-breakout/</link>
+      <pubDate>Mon, 26 Sep 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/docker-breakout/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Password Reuse</title>
+      <link>https://rug4lo.github.io/tags/password-reuse/</link>
+      <pubDate>Mon, 26 Sep 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/password-reuse/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SSTI</title>
+      <link>https://rug4lo.github.io/tags/ssti/</link>
+      <pubDate>Mon, 26 Sep 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/ssti/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Abusing Cron Job</title>
       <link>https://rug4lo.github.io/tags/abusing-cron-job/</link>
       <pubDate>Tue, 23 Aug 2022 07:28:17 +0800</pubDate>
@@ -286,13 +342,6 @@
       <link>https://rug4lo.github.io/tags/spring-cloud-exploitation/</link>
       <pubDate>Tue, 23 Aug 2022 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/tags/spring-cloud-exploitation/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Blog</title>
-      <link>https://rug4lo.github.io/tags/blog/</link>
-      <pubDate>Tue, 19 Jul 2022 07:28:17 +0800</pubDate>
-      <guid>https://rug4lo.github.io/tags/blog/</guid>
       <description></description>
     </item>
     <item>

