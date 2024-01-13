@@ -20,7 +20,7 @@
       <link>https://rug4lo.github.io/blog/2023/11/mi-experiencia-con-la-ejptv2/</link>
       <pubDate>Tue, 21 Nov 2023 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/blog/2023/11/mi-experiencia-con-la-ejptv2/</guid>
-      <description>Introduccion Hace unos meses me certifique con extito del EJPTv2 de Elearn Security, en este post os voy a explicar un poco sobre mi experiencia, los conocimientos que tenia antes de empezar al preparacion, la dificultad que yo creo que tiene el examen, y las maneras que considero que son las mejores para prepararse al completo para esta.
+      <description>Introducción Hace unos meses me certifique con éxito del EJPTv2 de Elearn Security, en este post os voy a explicar un poco sobre mi experiencia, los conocimientos que tenia antes de empezar al preparación, la dificultad que yo creo que tiene el examen, y las maneras que considero que son las mejores para prepararse al completo para esta.
 Mi Experiencia Personalmente fue un examen muy divertido, pocas veces tienes la capacidad de tener un entorno como este, para practicar y aprender.</description>
     </item>
     <item>
@@ -64,6 +64,14 @@ En este caso nos reportara que la maquina es linux
 whichSystem.py 192.168.1.30 Seguidamente aplicamos un reconocimiento con Nmap
 nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 192.168.1.30 Todo esto ira a un archivo llamado allPorts, con este comando podremos ver la información mas fácil mente
 extractPorts allPorts Ahora que sabemos cuales puertos están abiertos podemos mandar con Nmap un conjunto de scripts de reconocimiento para verificar si alguno tiene una vulnerabilidad</description>
+    </item>
+    <item>
+      <title>HTB - Zipping</title>
+      <link>https://rug4lo.github.io/htb/2023/03/htb-zipping/</link>
+      <pubDate>Wed, 01 Mar 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/htb/2023/03/htb-zipping/</guid>
+      <description>Contenido Reconocimiento SQLI SQLI to RCE Escalada de privilegios Reconocimiento Primero empezamos con el típico escaneo con nmap
+❯ nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allports 10.10.11.229 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-09-15 18:15 CEST Initiating SYN Stealth Scan at 18:15 Scanning 10.10.11.229 [65535 ports] Discovered open port 80/tcp on 10.</description>
     </item>
     <item>
       <title>HTB - Jeeves</title>
