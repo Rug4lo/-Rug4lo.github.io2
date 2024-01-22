@@ -56,6 +56,17 @@ $ hugo new posts/my-sample-post.md And you shall see the my-sample-post.md file 
   
 </head>
 <body>
+
+  <script>
+    window.onload = function() {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        
+        var mensaje = document.createElement('div');
+        mensaje.innerHTML = 'Esta página no se visualiza bien en dispositivos móviles. Por favor, visita desde un ordenador.';
+        document.body.appendChild(mensaje);
+      }
+    };
+  </script>  
   
   <header class="  panel-cover panel-cover--collapsed " style="background-image: url('/images/background-cover.jpg')">
 
@@ -215,15 +226,6 @@ $ hugo new posts/my-sample-post.md And you shall see the my-sample-post.md file 
     ga('send', 'pageview');
 </script>
 
-  
-  <script>
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      
-      var mensaje = document.createElement('div');
-      mensaje.innerHTML = 'Esta página no se visualiza bien en dispositivos móviles. Por favor, visita desde un ordenador.';
-      document.body.appendChild(mensaje);
-    }
-  </script>
 
 </body>
 
