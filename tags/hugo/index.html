@@ -49,13 +49,7 @@
   
 </head>
 <body>
-  <span class="mobile btn-mobile-menu">
-
-    <i class="fa fa-list btn-mobile-menu__icon"></i>
-    <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
-
-  </span>
-
+  
   <header class="  panel-cover panel-cover--collapsed " style="background-image: url('/images/background-cover.jpg')">
 
     <div class="panel-main">
@@ -200,5 +194,14 @@
 </script>
 
   
+  <script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      
+      var mensaje = document.createElement('div');
+      mensaje.innerHTML = 'Esta página no se visualiza bien en dispositivos móviles. Por favor, visita desde un ordenador.';
+      document.body.appendChild(mensaje);
+    }
+  </script>
+
 </body>
 
