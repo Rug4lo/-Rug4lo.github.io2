@@ -44,7 +44,7 @@
 
     
     
-    <link rel="stylesheet" href="https://rug4lo.github.io/scss/main.min.adb360f36911df977062e96eb4e21330ce1615c54d3dd63c070161b63452c73b.css" integrity="sha256-rbNg82kR35dwYulutOITMM4WFcVNPdY8BwFhtjRSxzs=" crossorigin="anonymous" media="screen">
+    <link rel="stylesheet" href="https://rug4lo.github.io/scss/main.min.f858a4eaa0f050b4645575705ca4a5ec2f862d81e81b8c9b54b6a3ecda306484.css" integrity="sha256-&#43;Fik6qDwULRkVXVwXKSl7C&#43;GLYHoG4ybVLaj7NowZIQ=" crossorigin="anonymous" media="screen">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
   
@@ -52,15 +52,12 @@
 <body>
 
   <script>
-    window.onload = function() {
-      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        
-        var mensaje = document.createElement('div');
-        mensaje.innerHTML = 'Esta página no se visualiza bien en dispositivos móviles. Por favor, visita desde un ordenador.';
-        document.body.appendChild(mensaje);
-      }
-    };
-  </script>  
+    
+    var mensaje = document.createElement('div');
+    mensaje.className = 'mobile-message';
+    mensaje.innerHTML = 'Esta página no esta pensada para dispositivos móviles. Por favor, visita desde un ordenador.';
+    document.body.appendChild(mensaje);
+  </script>
   
   <header class="  panel-cover panel-cover--collapsed " style="background-image: url('/images/background-cover.jpg')">
 
