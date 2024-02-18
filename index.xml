@@ -6,8 +6,16 @@
     <description>Recent content on Rug4lo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jan 2024 07:28:17 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 17 Feb 2024 07:28:17 +0800</lastBuildDate>
     <atom:link href="https://rug4lo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Como hackear una red Wifi</title>
+      <link>https://rug4lo.github.io/blog/2024/02/como-hackear-una-red-wifi/</link>
+      <pubDate>Sat, 17 Feb 2024 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/blog/2024/02/como-hackear-una-red-wifi/</guid>
+      <description>Indice Introduccion Aircrack-ng Establecer el modo monitor Análisis de la red Deautenticacion Captura del hadshake Cracking del hash Introduccion Este post es un post hecho junto a Yoshy. Link directo a su pagina web &amp;mdash;&amp;gt; https://llo0zy.github.io/
+En este post te voy a contar sobre la herramienta Aircrack-ng, al igual que de algunas de las herramientas que vienen de esta misma suite, y como usar estas herramientas para conseguir la constraseña de una red privada.</description>
+    </item>
     <item>
       <title>Proximamente...</title>
       <link>https://rug4lo.github.io/thm/2024/01/proximamente.../</link>
