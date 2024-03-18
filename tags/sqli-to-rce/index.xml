@@ -13,8 +13,7 @@
       <link>https://rug4lo.github.io/htb/2023/03/htb-zipping/</link>
       <pubDate>Wed, 01 Mar 2023 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/htb/2023/03/htb-zipping/</guid>
-      <description>Contenido Reconocimiento SQLI SQLI to RCE Escalada de privilegios Reconocimiento Primero empezamos con el típico escaneo con nmap
-❯ nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allports 10.10.11.229 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-09-15 18:15 CEST Initiating SYN Stealth Scan at 18:15 Scanning 10.10.11.229 [65535 ports] Discovered open port 80/tcp on 10.</description>
+      <description>Contenido Reconocimiento SQLI SQLI to RCE Escalada de privilegios Reconocimiento Primero empezamos con el típico escaneo con nmap&#xA;❯ nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allports 10.10.11.229 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-09-15 18:15 CEST Initiating SYN Stealth Scan at 18:15 Scanning 10.10.11.229 [65535 ports] Discovered open port 80/tcp on 10.</description>
     </item>
   </channel>
 </rss>

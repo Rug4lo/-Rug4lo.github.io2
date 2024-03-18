@@ -13,8 +13,7 @@
       <link>https://rug4lo.github.io/htb/2022/09/htb-goodgames/</link>
       <pubDate>Mon, 26 Sep 2022 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/htb/2022/09/htb-goodgames/</guid>
-      <description>Contenido Reconocimiento SQLI al panel administrador Dumpeo de la base de datos Server Side Template Injection Escalada de privilegios Reconocimiento Empezamos con el típico escaneo de Nmap
-❯ nmap -p- --open -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 10.10.11.130 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-11-03 18:04 CET Initiating SYN Stealth Scan at 18:04 Scanning 10.</description>
+      <description>Contenido Reconocimiento SQLI al panel administrador Dumpeo de la base de datos Server Side Template Injection Escalada de privilegios Reconocimiento Empezamos con el típico escaneo de Nmap&#xA;❯ nmap -p- --open -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 10.10.11.130 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-11-03 18:04 CET Initiating SYN Stealth Scan at 18:04 Scanning 10.</description>
     </item>
   </channel>
 </rss>

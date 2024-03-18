@@ -13,8 +13,7 @@
       <link>https://rug4lo.github.io/vlnh/2022/07/vulnhub-cereal-1/</link>
       <pubDate>Tue, 19 Jul 2022 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/vlnh/2022/07/vulnhub-cereal-1/</guid>
-      <description>Contenido Reconocimiento Explotación Reconocimiento Empezando con el típico escaneo de [[Nmap]] y exportamos todo el output a un archivo llamado allports
-❯ nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 192.168.177.128 # Nmap 7.93 scan initiated Wed Jul 26 16:21:16 2023 as: nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 192.168.177.128 # Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;) Host: 192.168.177.128 () Status: Up Host: 192.</description>
+      <description>Contenido Reconocimiento Explotación Reconocimiento Empezando con el típico escaneo de [[Nmap]] y exportamos todo el output a un archivo llamado allports&#xA;❯ nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 192.168.177.128 # Nmap 7.93 scan initiated Wed Jul 26 16:21:16 2023 as: nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 192.168.177.128 # Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;) Host: 192.168.177.128 () Status: Up Host: 192.</description>
     </item>
   </channel>
 </rss>

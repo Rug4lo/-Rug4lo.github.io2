@@ -13,8 +13,7 @@
       <link>https://rug4lo.github.io/htb/2023/07/htb-bankrobber/</link>
       <pubDate>Tue, 04 Jul 2023 07:28:17 +0800</pubDate>
       <guid>https://rug4lo.github.io/htb/2023/07/htb-bankrobber/</guid>
-      <description>Contenido Reconocimiento XSS Cookie hijacking SQLI Explotation SQLI a LFI XSS para ejecutar comandos Escalada de privilegios Reconocimiento Primero que todo vamos a hacer un escanedo de puertos con Nmap
-❯ nmap -p- --open -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 10.10.10.154 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-11-08 13:04 CET Initiating SYN Stealth Scan at 13:04 Scanning 10.</description>
+      <description>Contenido Reconocimiento XSS Cookie hijacking SQLI Explotation SQLI a LFI XSS para ejecutar comandos Escalada de privilegios Reconocimiento Primero que todo vamos a hacer un escanedo de puertos con Nmap&#xA;❯ nmap -p- --open -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 10.10.10.154 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-11-08 13:04 CET Initiating SYN Stealth Scan at 13:04 Scanning 10.</description>
     </item>
   </channel>
 </rss>
