@@ -142,6 +142,48 @@
       <description></description>
     </item>
     <item>
+      <title>BoF</title>
+      <link>https://rug4lo.github.io/tags/bof/</link>
+      <pubDate>Mon, 01 May 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/bof/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Debugging</title>
+      <link>https://rug4lo.github.io/tags/debugging/</link>
+      <pubDate>Mon, 01 May 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/debugging/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pivoting</title>
+      <link>https://rug4lo.github.io/tags/pivoting/</link>
+      <pubDate>Mon, 01 May 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/pivoting/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ret2libc</title>
+      <link>https://rug4lo.github.io/tags/ret2libc/</link>
+      <pubDate>Mon, 01 May 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/ret2libc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SQLI Blind</title>
+      <link>https://rug4lo.github.io/tags/sqli-blind/</link>
+      <pubDate>Mon, 01 May 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/sqli-blind/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SQLI Time Based</title>
+      <link>https://rug4lo.github.io/tags/sqli-time-based/</link>
+      <pubDate>Mon, 01 May 2023 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/sqli-time-based/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Cracking Hashes</title>
       <link>https://rug4lo.github.io/tags/cracking-hashes/</link>
       <pubDate>Fri, 03 Mar 2023 07:28:17 +0800</pubDate>
