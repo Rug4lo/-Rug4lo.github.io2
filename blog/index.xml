@@ -6,8 +6,15 @@
     <description>Recent content in Blogs on Rug4lo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Feb 2024 07:28:17 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 04 Apr 2024 07:28:17 +0800</lastBuildDate>
     <atom:link href="https://rug4lo.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FLAWS - Hacking en la nube</title>
+      <link>https://rug4lo.github.io/blog/2024/04/flaws-hacking-en-la-nube/</link>
+      <pubDate>Thu, 04 Apr 2024 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/blog/2024/04/flaws-hacking-en-la-nube/</guid>
+      <description>Indice Introduccion Nivel 1 - Mala implementacion de los permisos 1 Nivel 2 - Mala implementacion de los permisos 2 Nivel 3 - Mala implementacion de los permisos 3 Nivel 4 - Snapshots sin encriptar Nivel 5 - Meta-datos expuestos Nivel 6 - Mala configuración del IAM (politicas) Introduccion Este post es una explicacion de cada nivel de la pagina web http://flaws.cloud/&#xA;Esta pagina contiene un challenge dividido en varios niveles, en cada uno de ellos se toca una vulnerabilidad tipica o fallos comunes cuando se usa Amazon Web Services (AWS)</description>
+    </item>
     <item>
       <title>Como hackear una red Wifi</title>
       <link>https://rug4lo.github.io/blog/2024/02/como-hackear-una-red-wifi/</link>

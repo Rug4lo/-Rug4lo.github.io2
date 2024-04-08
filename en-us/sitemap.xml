@@ -3,16 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://rug4lo.github.io/tags/blog/</loc>
-    <lastmod>2024-02-17T07:28:17+08:00</lastmod>
+    <lastmod>2024-04-04T07:28:17+08:00</lastmod>
   </url><url>
     <loc>https://rug4lo.github.io/blog/</loc>
-    <lastmod>2024-02-17T07:28:17+08:00</lastmod>
+    <lastmod>2024-04-04T07:28:17+08:00</lastmod>
   </url><url>
-    <loc>https://rug4lo.github.io/blog/2024/02/como-hackear-una-red-wifi/</loc>
-    <lastmod>2024-02-17T07:28:17+08:00</lastmod>
+    <loc>https://rug4lo.github.io/blog/2024/04/flaws-hacking-en-la-nube/</loc>
+    <lastmod>2024-04-04T07:28:17+08:00</lastmod>
   </url><url>
     <loc>https://rug4lo.github.io/</loc>
-    <lastmod>2024-02-17T07:28:17+08:00</lastmod>
+    <lastmod>2024-04-04T07:28:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -25,7 +25,7 @@
                 />
   </url><url>
     <loc>https://rug4lo.github.io/tags/</loc>
-    <lastmod>2024-02-17T07:28:17+08:00</lastmod>
+    <lastmod>2024-04-04T07:28:17+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -36,6 +36,9 @@
                 hreflang="en-us"
                 href="https://rug4lo.github.io/tags/"
                 />
+  </url><url>
+    <loc>https://rug4lo.github.io/blog/2024/02/como-hackear-una-red-wifi/</loc>
+    <lastmod>2024-02-17T07:28:17+08:00</lastmod>
   </url><url>
     <loc>https://rug4lo.github.io/thm/2024/01/proximamente.../</loc>
     <lastmod>2024-01-10T07:28:17+08:00</lastmod>
