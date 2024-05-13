@@ -22,5 +22,12 @@
       <guid>https://rug4lo.github.io/vlnh/2023/03/vulnhub-myexpense-1/</guid>
       <description>Contenido Reconocimiento Explotación Reconocimiento Primero que todo con el whichsistem.py comprobamos si estamos ante una maquina linux o windows&#xA;En este caso nos reportara que la maquina es linux&#xA;whichSystem.py 192.168.1.30 Seguidamente aplicamos un reconocimiento con Nmap&#xA;nmap -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allPorts 192.168.1.30 Todo esto ira a un archivo llamado allPorts, con este comando podremos ver la información mas fácil mente&#xA;extractPorts allPorts Ahora que sabemos cuales puertos están abiertos podemos mandar con Nmap un conjunto de scripts de reconocimiento para verificar si alguno tiene una vulnerabilidad</description>
     </item>
+    <item>
+      <title>HTB - CozyHosting</title>
+      <link>https://rug4lo.github.io/htb/2022/11/htb-cozyhosting/</link>
+      <pubDate>Tue, 22 Nov 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/htb/2022/11/htb-cozyhosting/</guid>
+      <description>Contenido Reconocimiento Cookie hijacking Os Command Injection Conexion a PostgreSQL Deshashear contraseñas Escalada de privilegios Reconocimiento Primero empezamos con el típico escaneo con nmap&#xA;❯ map -p- --open -T5 -sS -min-rate 5000 -vvv -n -Pn -oG allports 10.10.11.230 Host discovery disabled (-Pn). All addresses will be marked &amp;#39;up&amp;#39; and scan times may be slower. Starting Nmap 7.93 ( https://nmap.org ) at 2023-09-12 18:05 CEST Initiating SYN Stealth Scan at 18:05 Scanning 10.</description>
+    </item>
   </channel>
 </rss>

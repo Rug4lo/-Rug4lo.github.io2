@@ -275,6 +275,20 @@
       <description></description>
     </item>
     <item>
+      <title>Os Command Injection</title>
+      <link>https://rug4lo.github.io/tags/os-command-injection/</link>
+      <pubDate>Tue, 22 Nov 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/os-command-injection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PostgreSQL</title>
+      <link>https://rug4lo.github.io/tags/postgresql/</link>
+      <pubDate>Tue, 22 Nov 2022 07:28:17 +0800</pubDate>
+      <guid>https://rug4lo.github.io/tags/postgresql/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Abusing sudoers privilege</title>
       <link>https://rug4lo.github.io/tags/abusing-sudoers-privilege/</link>
       <pubDate>Sat, 19 Nov 2022 07:28:17 +0800</pubDate>
